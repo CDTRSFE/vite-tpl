@@ -4,6 +4,9 @@ import Vue from '@vitejs/plugin-vue';
 import Components from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import AutoImport from 'unplugin-auto-import/vite';
+import Icons from 'unplugin-icons/vite';
+import IconsResolver from 'unplugin-icons/resolver';
+import { FileSystemIconLoader } from 'unplugin-icons/loaders';
 
 export default defineConfig({
     resolve: {
@@ -24,12 +27,16 @@ export default defineConfig({
             dts: 'src/types/components.d.ts',
             resolvers: [
                 name => {
-                    console.log(name);
+                    // console.log(name);
                     if (name === 'TabSelect') {
                         return { path: '@/components/' + name + '/Index.vue' };
                     }
                 },
                 ElementPlusResolver(),
+                IconsResolver({
+                    prefix: 'i',
+                    customCollections: ['my-icons'],
+                }),
             ],
         }),
         AutoImport({
@@ -45,6 +52,12 @@ export default defineConfig({
                 enabled: true, // Default `false`
                 filepath: './.eslintrc-auto-import.json', // Default `./.eslintrc-auto-import.json`
                 globalsPropValue: true, // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
+            },
+        }),
+        Icons({
+            autoInstall: true,
+            customCollections: {
+                'my-icons': FileSystemIconLoader('./src/assets/icons'),
             },
         }),
     ],

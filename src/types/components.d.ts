@@ -4,10 +4,9 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
-    ElButton: typeof import('element-plus/es')['ElButton']
     Focus: typeof import('./../directives/focus.js')['default']
     FullLoading: typeof import('./../components/FullLoading.vue')['default']
-    TabSelect: typeof import('@/components/TabSelect/Index.vue')['default']
+    IMyIconsAbout: typeof import('~icons/my-icons/about')['default']
   }
 }
 

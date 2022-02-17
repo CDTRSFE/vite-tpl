@@ -17,6 +17,7 @@
       "types": [
         "vite/client",
         "@types/node",
+        "unplugin-icons/types/vue"
       ],
       "paths": {
         "@/*": ["src/*"]

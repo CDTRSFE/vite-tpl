@@ -35,6 +35,7 @@
     "less": "^4.1.2",
     "typescript": "^4.5.5",
     "unplugin-auto-import": "^0.5.11",
+    "unplugin-icons": "^0.13.1",
     "unplugin-vue-components": "^0.17.18",
     "vite": "^2.7.13"
   }
