@@ -6,7 +6,6 @@ declare module 'vue' {
   export interface GlobalComponents {
     Focus: typeof import('./../directives/focus.js')['default']
     FullLoading: typeof import('./../components/FullLoading.vue')['default']
-    IMyIconsAbout: typeof import('~icons/my-icons/about')['default']
   }
 }
 

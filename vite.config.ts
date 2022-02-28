@@ -7,6 +7,7 @@ import AutoImport from 'unplugin-auto-import/vite';
 import Icons from 'unplugin-icons/vite';
 import IconsResolver from 'unplugin-icons/resolver';
 import { FileSystemIconLoader } from 'unplugin-icons/loaders';
+import WindiCSS from 'vite-plugin-windicss';
 
 export default defineConfig({
     resolve: {
@@ -60,5 +61,6 @@ export default defineConfig({
                 'my-icons': FileSystemIconLoader('./src/assets/icons'),
             },
         }),
+        WindiCSS(),
     ],
 });
