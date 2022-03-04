@@ -6,6 +6,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     Focus: typeof import('./../directives/focus.js')['default']
     FullLoading: typeof import('./../components/FullLoading.vue')['default']
+    TabSelect: typeof import('./../components/TabSelect.vue')['default']
   }
 }
 

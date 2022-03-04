@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-export default {
+export default defineComponent({
     name: 'TabSelect',
     props: {
         value: {
@@ -13,7 +13,7 @@ export default {
             default: '',
         },
     },
-};
+});
 </script>
 
 <style scoped lang="less">
