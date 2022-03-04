@@ -1,21 +1,12 @@
 <template>
-    <div class="about">
-        about {{ props.about }}
+    <div class="about-demo">
+        {{ name }}
     </div>
 </template>
 
 <script lang="ts" setup>
-const props = defineProps({
-    about: {
-        type: String,
-        default: 'ab',
-    },
-});
+const name = 1;
 </script>
 
 <style scoped lang="less">
-.about {
-    height: 1300px;
-    background-color: #ddd;
-}
 </style>

@@ -1,5 +1,7 @@
 <template>
-    <p class="h-full">123</p>
+    <p class="h-full">
+        123
+    </p>
     <div
         class="box transform"
         text="center size-30px hex-666"
@@ -21,7 +23,9 @@
         <li>4</li>
         <li>5</li>
     </ul>
-    <button outline="">tb</button>
+    <button outline="">
+        tb
+    </button>
     <p>
         <input type="checkbox" class="hover:(bg-red-200 font-bold text-black)" accent="red-500" />
     </p>
@@ -34,9 +38,12 @@
     </div>
     <div w="100px" bg="red-200"></div>
     <div bg="red-300" w="100px" class="aspect-square"></div>
-    <p class="line-clamp-2 w-1/5" w="40p">When building frontend applications, we often have the need to reuse logic for common tasks. For example, we may need to format dates in many places, so we extract a reusable function for that. This formatter function encapsulates stateless logic: it takes some input and immediately returns expected output. There are many libraries out there for reusing</p>
+    <p class="line-clamp-2 w-1/5" w="40p">
+        When building frontend applications, we often have the need to reuse logic for common tasks. For example, we may need to format dates in many places, so we extract a reusable function for that. This formatter function encapsulates stateless logic: it takes some input and immediately returns expected output. There are many libraries out there for reusing
+    </p>
     <textarea id="e" name="3" cols="30" rows="10"></textarea>
     <about-com text="red-400"></about-com>
+    <full-loading></full-loading>
 </template>
 
 <script setup lang="ts">

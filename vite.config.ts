@@ -27,10 +27,10 @@ export default defineConfig({
             // 生成全局类型声明文件，以便 volar 类型提示
             dts: 'src/types/components.d.ts',
             resolvers: [
-                name => {
+                (name) => {
                     // console.log(name);
                     if (name === 'TabSelect') {
-                        return { path: '@/components/' + name + '/Index.vue' };
+                        return { path: `@/components/${name}/Index.vue` };
                     }
                 },
                 ElementPlusResolver(),
@@ -41,12 +41,11 @@ export default defineConfig({
             ],
         }),
         AutoImport({
-            include: [/\.[tj]sx?$/, /\.vue$/, /\.vue\?vue/],
+            include: [/\.[jt]sx?$/, /\.vue$/, /\.vue\?vue/],
             imports: [
                 'vue',
                 'vue-router',
                 '@vueuse/core',
-                // 'vitest',
             ],
             dts: 'src/types/auto-imports.d.ts',
             eslintrc: {

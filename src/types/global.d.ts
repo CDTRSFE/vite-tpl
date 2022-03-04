@@ -1,15 +1,14 @@
-import { AxiosInstance } from 'axios';
-import { createApp } from 'vue';
+import type { AxiosInstance } from 'axios';
 
 declare global {
     interface Window {
-        axios: AxiosInstance
+        axios: AxiosInstance;
     }
     // type CustomizedHTMLElement<T> = HTMLElement & T
 }
 
 declare module '@vue/runtime-core' {
     export interface ComponentCustomProperties {
-        $axios: AxiosInstance
+        $axios: AxiosInstance;
     }
 }

@@ -1,44 +1,44 @@
 {
-  "name": "vite-tpl",
-  "version": "0.1.0",
-  "description": "vite tpl",
-  "main": "index.js",
-  "scripts": {
-    "dev": "vite --open",
-    "lint": "eslint \"**/*.{vue,ts,js}\"",
-    "preinstall": "npx only-allow pnpm"
-  },
-  "keywords": [
-    "vite",
-    "vue"
-  ],
-  "author": "zhaoqing",
-  "license": "MIT",
-  "dependencies": {
-    "@vueuse/core": "^7.6.0",
-    "axios": "^0.25.0",
-    "element-plus": "^2.0.1",
-    "pinia": "^2.0.11",
-    "vue": "^3.2.30",
-    "vue-router": "^4.0.12"
-  },
-  "devDependencies": {
-    "@rushstack/eslint-patch": "^1.1.0",
-    "@types/node": "^17.0.16",
-    "@typescript-eslint/parser": "^5.11.0",
-    "@vitejs/plugin-vue": "^2.2.0",
-    "@vue/compiler-sfc": "^3.2.30",
-    "@vue/eslint-config-typescript": "^10.0.0",
-    "eslint": "^8.8.0",
-    "eslint-config-tpconfig": "^0.3.3",
-    "eslint-plugin-vue": "^8.4.1",
-    "less": "^4.1.2",
-    "typescript": "^4.5.5",
-    "unplugin-auto-import": "^0.5.11",
-    "unplugin-icons": "^0.13.1",
-    "unplugin-vue-components": "^0.17.18",
-    "vite": "^2.7.13",
-    "vite-plugin-windicss": "^1.7.1",
-    "windicss": "^3.4.3"
-  }
+    "name": "vite-tpl",
+    "version": "0.1.0",
+    "description": "vite tpl",
+    "main": "index.js",
+    "scripts": {
+        "dev": "vite --open",
+        "lint": "eslint \"**/*.{vue,ts,js}\"",
+        "preinstall": "npx only-allow pnpm"
+    },
+    "keywords": [
+        "vite",
+        "vue"
+    ],
+    "author": "zhaoqing",
+    "license": "MIT",
+    "dependencies": {
+        "@vueuse/core": "^7.6.0",
+        "axios": "^0.25.0",
+        "element-plus": "^2.0.1",
+        "pinia": "^2.0.11",
+        "vue": "^3.2.30",
+        "vue-router": "^4.0.12"
+    },
+    "devDependencies": {
+        "@rushstack/eslint-patch": "^1.1.0",
+        "@trscd/eslint-config": "^0.1.0",
+        "@types/node": "^17.0.16",
+        "@typescript-eslint/parser": "^5.11.0",
+        "@vitejs/plugin-vue": "^2.2.0",
+        "@vue/compiler-sfc": "^3.2.30",
+        "@vue/eslint-config-typescript": "^10.0.0",
+        "eslint": "^8.8.0",
+        "eslint-plugin-vue": "^8.4.1",
+        "less": "^4.1.2",
+        "typescript": "^4.5.5",
+        "unplugin-auto-import": "^0.5.11",
+        "unplugin-icons": "^0.13.1",
+        "unplugin-vue-components": "^0.17.18",
+        "vite": "^2.7.13",
+        "vite-plugin-windicss": "^1.7.1",
+        "windicss": "^3.4.3"
+    }
 }
