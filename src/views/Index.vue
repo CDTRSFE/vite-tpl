@@ -51,11 +51,6 @@ import AboutCom from './About.vue';
 </script>
 
 <style scoped lang="less">
-.hello {
-    // margin-top: 100px;
-    // font-size: 30px;
-    // text-align: center;
-}
 .box {
     @apply bg-red-100;
 }
