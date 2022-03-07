@@ -54,12 +54,6 @@
             "path": "./node_modules/cz-conventional-changelog"
         }
     },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged",
-            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-        }
-    },
     "lint-staged": {
         "*.{js,ts,vue}": "pnpm lint",
         "*.{vue,html,css,less,scss,sass}": "pnpm stylelint"
