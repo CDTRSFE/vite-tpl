@@ -21,23 +21,23 @@ export default function(axios: AxiosInstance) {
     };
 
     axios.interceptors.request.use(
-        (config) => {
+        config => {
             if (config.loading === false) {
                 loading.open();
             }
             return config;
         },
-        (error) => {
+        error => {
             return Promise.reject(error);
         },
     );
 
     axios.interceptors.response.use(
-        (response) => {
+        response => {
             loading.close();
             return response;
         },
-        (error) => {
+        error => {
             loading.close();
             return Promise.reject(error);
         },
