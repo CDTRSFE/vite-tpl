@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import router from './router';
 import App from './App.vue';
+import axios from '@/plugins/axios';
 
 // windicss layers
 import 'virtual:windi-base.css';
@@ -18,4 +19,5 @@ const pinia = createPinia();
 createApp(App)
     .use(router)
     .use(pinia)
+    .use(axios)
     .mount('#app');

@@ -4,8 +4,20 @@
     </div>
 </template>
 
-<script lang="ts" setup>
-const name = 1;
+<script lang="ts">
+export default defineComponent({
+    name: 'AboutCom',
+    data() {
+        return {
+            name: '',
+        };
+    },
+    methods: {
+        fn() {
+            this.axios('/abc');
+        },
+    },
+});
 </script>
 
 <style scoped lang="less">

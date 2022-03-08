@@ -3,6 +3,7 @@
 ## 特性
 
 +   Vue3, Vite, TS
++   [axios](https://axios-http.com/) - 基于 promise 的 HTTP 库
 +   [PNPM](https://pnpm.io/zh/) - 快速的，节省磁盘空间的包管理工具
 +   [Windi CSS](https://windicss.org/) - 工具优先的 CSS 框架
 +   [Pinia](https://pinia.vuejs.org/) - Vue 状态管理库
@@ -21,9 +22,97 @@ pnpm i
 pnpm dev
 ```
 
+## 目录
+
+```
+.
+├── .husky
+│   ├── commit-msg                   # commit message 格式检测
+│   └── pre-commit                   # git 钩子，commit 之前执行 pnpm lint, pnpm styelint
+├── .vscode
+├── public                           # 静态资源文件夹
+│   └── favicon.ico
+├── src
+│   ├── App.vue                      # 根组件
+│   ├── assets
+│   │   ├── fonts                    # 字体文件夹
+│   │   ├── icons                    # 图标文件夹
+│   │   │   └── about.svg
+│   │   ├── images                   # 图片文件夹
+│   │   └── styles                   # 样式文件夹
+│   │       └── main.less            # 全局样式
+│   ├── components                   # 全局组件文件夹
+│   │   └── TabSelect.vue
+│   ├── directives                   # 全局指令文件夹
+│   │   └── focus.js
+│   ├── main.ts                      # 入口文件
+│   ├── plugins
+│   │   ├── axios.ts                 # axios
+│   │   └── loading.ts
+│   ├── router
+│   │   └── index.ts                 # 路由
+│   ├── store                        # 状态管理
+│   ├── types
+│   │   ├── auto-imports.d.ts        # 自动引入 API 的类型声明
+│   │   ├── components.d.ts          # 自动注册组件的类型声明
+│   │   ├── global.d.ts              # 全局类型声明
+│   │   └── shims.d.ts               # 模块类型声明
+│   └── views
+│       └── Index.vue
+├── .eslintignore
+├── .eslintrc.js                     # eslint 配置
+├── .eslintrc-auto-import.json       # 自动引入的 API 全局变量配置
+├── .gitignore
+├── index.html
+├── README.md
+├── commitlint.config.js             # commitlint 配置
+├── stylelint.config.js              # stylelint 配置
+├── package.json
+├── pnpm-lock.yaml
+├── tsconfig.json                    # ts 配置
+├── vite.config.ts                   # vite 配置
+└── windi.config.ts                  # Windi CSS 配置
+```
+
+## 🚀 axios
+
+项目中引入了 axios，拦截器等相关配置在 `src/plugins/axios.ts` 中，axios 实例可作为全局变量直接访问，也可通过 Vue 组件的全局属性访问。
+
+```vue
+<script lang="ts">
+export default defineComponent({
+    created() {
+        this.$axios('/xxx');
+    },
+});
+</script>
+```
+
+```vue
+<script lang="ts" setup>
+window.axios.get('/xxx');
+axios.get('/xxx');
+</script>
+```
+
+通常情况下，发请求需要显示 loading 动画，所有请求都响应后关闭动画，可在 `src/plugins/loading.ts` 中添加具体的 loading 逻辑。
+
+```javascript
+// ..
+const open = () => {};
+const close = () => {};
+// ...
+```
+
+对于不需要 loading 动画的请求需要在配置中添加 `loading` 属性。
+
+```javascript
+axios.get('/xxx', { loading: false });
+```
+
 ## 🚀 PNPM
 
-[PNPM](https://pnpm.io/zh/) 是一个快速的，节省磁盘空间的包管理工具。
+[PNPM](https://pnpm.io/zh/) 是一个快速的，节省磁盘空间的包管理工具。比 npm 安装速度更快，空间占用更少。
 
 1⃣️  **减少磁盘空间占用**
 
