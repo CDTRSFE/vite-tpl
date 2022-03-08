@@ -10,6 +10,10 @@ import { FileSystemIconLoader } from 'unplugin-icons/loaders';
 import WindiCSS from 'vite-plugin-windicss';
 
 export default defineConfig({
+    server: {
+        // https://cn.vitejs.dev/config/#server-proxy
+        proxy: {},
+    },
     resolve: {
         alias: {
             '@/': `${path.resolve(__dirname, 'src')}/`,
