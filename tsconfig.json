@@ -2,7 +2,7 @@
     "compilerOptions": {
         "baseUrl": ".",
         "module": "ESNext",
-        "target": "es2016",
+        "target": "ESNext",
         "lib": ["DOM", "ESNext"],
         "strict": true,
         "esModuleInterop": true,
@@ -17,7 +17,8 @@
         "types": [
             "vite/client",
             "@types/node",
-            "unplugin-icons/types/vue"
+            "unplugin-icons/types/vue",
+            "element-plus/global"
         ],
         "paths": {
             "@/*": ["src/*"]

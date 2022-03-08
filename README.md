@@ -3,6 +3,8 @@
 ## 特性
 
 +   Vue3, Vite, TS
+
++   [element-plus](https://element-plus.gitee.io/zh-CN/) - 基于 Vue3 的组件库
 +   [axios](https://axios-http.com/) - 基于 promise 的 HTTP 库
 +   [PNPM](https://pnpm.io/zh/) - 快速的，节省磁盘空间的包管理工具
 +   [Windi CSS](https://windicss.org/) - 工具优先的 CSS 框架
@@ -95,16 +97,7 @@ axios.get('/xxx');
 </script>
 ```
 
-通常情况下，发请求需要显示 loading 动画，所有请求都响应后关闭动画，可在 `src/plugins/loading.ts` 中添加具体的 loading 逻辑。
-
-```javascript
-// ..
-const open = () => {};
-const close = () => {};
-// ...
-```
-
-对于不需要 loading 动画的请求需要在配置中添加 `loading` 属性。
+通常情况下，发请求需要显示 loading 动画，所有请求都响应后关闭动画，可在 `src/plugins/loading.ts` 中修改具体的 loading 逻辑。对于不需要 loading 动画的请求需要在配置中添加 `loading` 属性：
 
 ```javascript
 axios.get('/xxx', { loading: false });
@@ -790,8 +783,7 @@ export default defineConfig({
 ./src
 ├── components
 │   ├── FullLoading.vue
-│   └── TabSelect
-│       └── Index.vue
+│   └── TabSelect.vue
 ├── directives
 │   └── focus.js
 ```

@@ -5,10 +5,15 @@
     "main": "index.js",
     "scripts": {
         "dev": "vite --open",
-        "lint": "eslint \"**/*.{vue,ts,js}\"",
+        "serve": "pnpm dev",
+        "build": "vite build",
+        "preview": "vite preview",
+        "preview:build": "pnpm build && vite preview",
+        "lint": "pnpm lint:eslint && pnpm lint:stylelint",
+        "lint:eslint": "eslint \"src/**/*.{vue,ts,js}\" --fix",
+        "lint:stylelint": "stylelint \"src/**/*.{vue,html,css,less,scss,sass}\" --fix",
         "preinstall": "npx only-allow pnpm",
-        "prepare": "husky install",
-        "stylelint": "stylelint 'src/**/*.{vue,html,css,less,scss,sass}' --fix"
+        "prepare": "husky install"
     },
     "keywords": [
         "vite",
@@ -19,6 +24,7 @@
     "dependencies": {
         "@vueuse/core": "^7.7.1",
         "axios": "^0.25.0",
+        "element-plus": "^2.0.5",
         "pinia": "^2.0.11",
         "qs": "^6.10.3",
         "vue": "^3.2.31",
@@ -27,9 +33,11 @@
     "devDependencies": {
         "@commitlint/cli": "^16.2.1",
         "@commitlint/config-conventional": "^16.2.1",
+        "@rollup/plugin-strip": "^2.1.0",
         "@rushstack/eslint-patch": "^1.1.0",
         "@trscd/eslint-config": "^0.1.2",
         "@trscd/stylelint-config-tpconfig": "^1.1.3",
+        "@types/lodash-es": "^4.17.6",
         "@types/node": "^17.0.21",
         "@types/qs": "^6.9.7",
         "@typescript-eslint/parser": "^5.14.0",
@@ -42,6 +50,7 @@
         "husky": "^7.0.4",
         "less": "^4.1.2",
         "lint-staged": "^12.3.5",
+        "postcss": "^8.4.8",
         "stylelint": "^14.5.3",
         "typescript": "^4.6.2",
         "unplugin-auto-import": "^0.6.1",
@@ -57,7 +66,7 @@
         }
     },
     "lint-staged": {
-        "*.{js,ts,vue}": "pnpm lint",
-        "*.{vue,html,css,less,scss,sass}": "pnpm stylelint"
+        "*.{js,ts,vue}": "pnpm lint:eslint",
+        "*.{vue,html,css,less,scss,sass}": "pnpm lint:stylelint"
     }
 }
