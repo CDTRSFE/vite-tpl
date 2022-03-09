@@ -39,12 +39,10 @@ pnpm dev
 │   ├── assets
 │   │   ├── fonts                    # 字体文件夹
 │   │   ├── icons                    # 图标文件夹
-│   │   │   └── about.svg
 │   │   ├── images                   # 图片文件夹
 │   │   └── styles                   # 样式文件夹
 │   │       └── main.less            # 全局样式
 │   ├── components                   # 全局组件文件夹
-│   │   └── TabSelect.vue
 │   ├── directives                   # 全局指令文件夹
 │   │   └── focus.js
 │   ├── main.ts                      # 入口文件
