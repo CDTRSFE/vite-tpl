@@ -5,8 +5,15 @@
 declare module 'vue' {
   export interface GlobalComponents {
     Focus: typeof import('./../directives/focus.js')['default']
-    FullLoading: typeof import('./../components/FullLoading.vue')['default']
-    TabSelect: typeof import('./../components/TabSelect.vue')['default']
+    IMyIconsAxios: typeof import('~icons/my-icons/axios')['default']
+    IMyIconsElement: typeof import('~icons/my-icons/element')['default']
+    IMyIconsIconify: typeof import('~icons/my-icons/iconify')['default']
+    IMyIconsPinia: typeof import('~icons/my-icons/pinia')['default']
+    IMyIconsPnpm: typeof import('~icons/my-icons/pnpm')['default']
+    IMyIconsVite: typeof import('~icons/my-icons/vite')['default']
+    IMyIconsVueuse: typeof import('~icons/my-icons/vueuse')['default']
+    IMyIconsWindicss: typeof import('~icons/my-icons/windicss')['default']
+    InfoText: typeof import('./../components/InfoText.vue')['default']
   }
 }
 

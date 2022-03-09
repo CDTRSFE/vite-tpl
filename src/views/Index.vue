@@ -1,32 +1,18 @@
 <template>
-    <!-- <div
-        class="box transform"
-        text="center size-30px hex-666"
-        leading="100px"
-        w="100px"
-        h="100px"
-        m="y-50px x-auto"
-        transform="rotate-12 translate-x-30px"
-        overflow="hidden"
-        border="3 hex-f00 rounded-10px t-5"
-        box="content"
-    >
-        123
-    </div> -->
-    <about-com text="red-400"></about-com>
-    <full-loading></full-loading>
-    <el-input></el-input>
+    <vue-logo></vue-logo>
+    <info-text></info-text>
+    <div class="flex justify-center items-center space-x-20px">
+        <i-my-icons-vite></i-my-icons-vite>
+        <i-my-icons-element></i-my-icons-element>
+        <i-my-icons-axios text="size-50px"></i-my-icons-axios>
+        <i-my-icons-windicss text="blue-400"></i-my-icons-windicss>
+        <i-my-icons-pinia class="h-28px w-auto"></i-my-icons-pinia>
+        <i-my-icons-pnpm class="text-size-22px"></i-my-icons-pnpm>
+        <i-my-icons-vueuse class="h-24px w-auto"></i-my-icons-vueuse>
+        <i-my-icons-iconify class="h-80px w-auto"></i-my-icons-iconify>
+    </div>
 </template>
 
 <script setup lang="ts">
-import AboutCom from './About.vue';
-axios.get('/mock/70/bigscreen-wx/yq/areahotlist').then(res => {
-    console.log(res);
-});
+import VueLogo from './VueLogo.vue';
 </script>
-
-<style scoped lang="less">
-.box {
-    @apply bg-red-100;
-}
-</style>
