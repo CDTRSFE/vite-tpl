@@ -922,7 +922,7 @@ export const useCountStore = defineStore('counter', () => {
     const increment = () => counter.value++;
 
     return { counter, doubleCount, increment };
-}
+})
 ```
 
 可以根据需要定义任意多个 store，并且应该放在不同的文件中，如：
@@ -1442,7 +1442,7 @@ export default {
 
 ## 🚀 Stylelint
 
-使用 [stylelint-config-tpconfig](https://github.com/CDTRSFE/stylelint-config-tpconfig) 的规则，可运行 `pnpm stylelint` 手动检测 src 目录下的样式文件。建议安装编辑器 [stylelint 插件](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)，并开启保存时自动修复。
+使用 [stylelint-config-tpconfig](https://github.com/CDTRSFE/stylelint-config-tpconfig) 的规则，可运行 `pnpm lint:stylelint` 手动检测 src 目录下的样式文件。建议安装编辑器 [stylelint 插件](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)，并开启保存时自动修复。
 
 ```jsx
 // stylelint.config.js
@@ -1463,7 +1463,7 @@ vscode settings.json：
 }
 ```
 
-## 🚀 Eslint
+## 🚀 ESLint
 
 使用 [@trscd/eslint-config](https://github.com/CDTRSFE/eslint-config) 配置，对 JS，TS，Vue 代码做检测。
 
