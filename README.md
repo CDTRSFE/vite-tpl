@@ -122,9 +122,9 @@ axios.get('/xxx', { loading: false });
 | npm 命令 | pnpm 等效 |
 | --- | --- |
 | npm install | pnpm install |
-| npm i <pkg> | [pnpm add <pkg>] |
-| npm run <cmd> | [pnpm <cmd>] |
-| npm uninstall <pkg> | pnpm remove <pkg>  别名：rm / uninstall / un |
+| npm i \<pkg\> | [pnpm add \<pkg\>] |
+| npm run \<cmd\> | [pnpm \<cmd\>] |
+| npm uninstall \<pkg\> | pnpm remove \<pkg\>  别名：rm / uninstall / un |
 
 当使用一个未知命令时，pnpm 会查找一个具有指定名称的脚本，所以 `pnpm run lint` 和 `pnpm lint`相同。
 
