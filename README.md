@@ -264,7 +264,7 @@ await unload()
 
 ⭐  **useUrlSearchParams** [https://vueuse.org/core/useurlsearchparams](https://vueuse.org/core/useurlsearchparams/?foo=bar&vueuse=awesome#useurlsearchparams)
 
-响应式的 [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)，可以读取或修改 url 参数，直接 history，hash 模式。
+响应式的 [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)，可以读取或修改 url 参数，支持 history / hash 模式的路由。
 
 <details>
 <summary>demo</summary><br>
@@ -718,7 +718,7 @@ const [value, toggle] = useToggle()
 
 ⭐  **事件过滤器**  [https://vueuse.org/guide/config.html#event-filters](https://vueuse.org/guide/config.html#event-filters)
 
-可以更灵活地控制事件触发，提供了*防抖* 和*截流* ****的功能，也可以让事件*暂停* /继续触发。
+可以更灵活地控制事件触发，提供了*防抖*和*截流*的功能，也可以让事件*暂停*/*继续*触发。
 
 <details>
 <summary>demo</summary><br>
