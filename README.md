@@ -20,6 +20,7 @@
 ```shell
 npx degit CDTRSFE/vite-tpl my-project
 cd my-project
+git init
 pnpm i
 pnpm dev
 ```
