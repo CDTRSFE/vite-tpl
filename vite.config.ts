@@ -26,6 +26,14 @@ export default (env: ConfigEnv) => {
                 '@/': `${path.resolve(__dirname, 'src')}/`,
             },
         },
+        base: './',
+        css: {
+            preprocessorOptions: {
+                less: {
+                    additionalData: '@import "@/assets/styles/mixin.less";',
+                },
+            },
+        },
         plugins: [
             Vue(),
             // 生产环境删除 debugger 和 console

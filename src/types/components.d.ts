@@ -14,7 +14,6 @@ declare module 'vue' {
     IMyIconsUnocss: typeof import('~icons/my-icons/unocss')['default']
     IMyIconsVite: typeof import('~icons/my-icons/vite')['default']
     IMyIconsVueuse: typeof import('~icons/my-icons/vueuse')['default']
-    IMyIconsWindicss: typeof import('~icons/my-icons/windicss')['default']
     InfoText: typeof import('./../components/InfoText.vue')['default']
   }
 }
