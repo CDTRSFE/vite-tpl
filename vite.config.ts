@@ -8,8 +8,10 @@ import AutoImport from 'unplugin-auto-import/vite';
 import Icons from 'unplugin-icons/vite';
 import IconsResolver from 'unplugin-icons/resolver';
 import { FileSystemIconLoader } from 'unplugin-icons/loaders';
-import WindiCSS from 'vite-plugin-windicss';
 import strip from '@rollup/plugin-strip';
+import Unocss from 'unocss/vite';
+import { presetAttributify, presetWind } from 'unocss';
+import transformerDirective from '@unocss/transformer-directives';
 
 export default (env: ConfigEnv) => {
     return defineConfig({
@@ -67,7 +69,50 @@ export default (env: ConfigEnv) => {
                     'my-icons': FileSystemIconLoader('./src/assets/icons'),
                 },
             }),
-            WindiCSS(),
+            Unocss({
+                shortcuts: {
+                    'flex-center': 'flex items-center justify-center',
+                },
+                theme: {
+                    colors: {
+                        primary: '#1F76E5',
+                    },
+                },
+                presets: [
+                    presetAttributify(),
+                    presetWind(),
+                ],
+                transformers: [
+                    transformerDirective(),
+                ],
+                rules: [
+                    [/^scrollbar-([^-]+)(-(.+))?$/, ([, d,, value], { rawSelector }) => {
+                        let p = '';
+                        if (!value) {
+                            p = `width: ${d}; height: ${d}`;
+                        }
+                        if (d === 'w') {
+                            p = `width: ${value}`;
+                        } else if (p === 'h') {
+                            p = `height: ${value}`;
+                        }
+                        return `.${rawSelector}::-webkit-scrollbar {
+                            ${p}
+                        }`;
+                    }],
+                    // 文本超出省略
+                    // usage: class="ellipsis ellipsis-2 ellipsis-3"
+                    [/^ellipsis(-(\d+))?$/, ([,, d], { rawSelector }) => {
+                        return `.${rawSelector} {
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            display: -webkit-box;
+                            -webkit-line-clamp: ${d || 1};
+                            -webkit-box-orient: vertical;
+                        }`;
+                    }],
+                ],
+            }),
         ],
     });
 };

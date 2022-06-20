@@ -7,7 +7,7 @@
 +   [element-plus](https://element-plus.gitee.io/zh-CN/) - 基于 Vue3 的组件库
 +   [axios](https://axios-http.com/) - 基于 promise 的 HTTP 库
 +   [PNPM](https://pnpm.io/zh/) - 快速的，节省磁盘空间的包管理工具
-+   [Windi CSS](https://windicss.org/) - 工具优先的 CSS 框架
++   [UnoCSS](https://github.com/unocss/unocss) - 原子化 CSS 引擎
 +   [Pinia](https://pinia.vuejs.org/) - Vue 状态管理库
 +   [VueUse](https://github.com/vueuse/vueuse) - 基于 Composition API 的工具函数集
 +   [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) - 组件自动化加载
@@ -71,8 +71,7 @@ pnpm dev
 ├── package.json
 ├── pnpm-lock.yaml
 ├── tsconfig.json                    # ts 配置
-├── vite.config.ts                   # vite 配置
-└── windi.config.ts                  # Windi CSS 配置
+└── vite.config.ts                   # vite 配置
 ```
 
 ## 🚀 axios
@@ -1109,9 +1108,9 @@ import MyIconsAbout from '~icons/my-icons/about’;
 - 平台账号丢失，只能新建一个图标项目；
 - 多色图标需要换用 svg 或者图片，造成项目中图标使用风格不统一；
 
-## 🚀 Windi CSS
+## 🚀 UnoCSS
 
-[Windi CSS](https://windicss.org/) 是下一代工具优先的 CSS 框架，通过扫描 HTML 和 CSS 按需生成工具类（utilities）。
+[UnoCSS](https://github.com/unocss/unocss) 是高性能且极具灵活性的即时原子化 CSS 引擎。
 
 ### 组件化 / 原子化
 
@@ -1129,59 +1128,50 @@ import MyIconsAbout from '~icons/my-icons/about’;
 
 ### ⚙️ 配置
 
-首先，Windi CSS 需要一个配置文件：
+UnoCSS 的配置文件写在了 vite.config.ts 中，作为 vite 插件参数传入：
 
-```tsx
-// windi.config.ts
-
-import { defineConfig } from 'windicss/helpers';
-
-export default defineConfig({
-    attributify: true,
-    plugins: [
-        require('windicss/plugin/line-clamp'),
-    ],
-});
-```
-
-以上配置中，`attributify: true` 表示开启[属性化模式](https://windicss.org/posts/v30.html#attributify-mode)；以及引入了 [line-clamp 插件](https://windicss.org/plugins/official/line-clamp.html)。
-
-然后，在 Vite 配置中使用 [windicss 插件](https://github.com/windicss/vite-plugin-windicss)：
-
-```tsx
+```ts
 // vite.config.ts
 
-import { defineConfig } from 'vite';
-import WindiCSS from 'vite-plugin-windicss';
+import Unocss from 'unocss/vite';
+import { presetAttributify, presetWind } from 'unocss';
+import transformerDirective from '@unocss/transformer-directives';
 
-export default defineConfig({
-    plugins: [
-        WindiCSS(),
-    ]
-});
+export default (env: ConfigEnv) => {
+    return defineConfig({
+        plugins: [
+            Unocss({
+                presets: [
+                    presetWind(),
+                    presetAttributify(),
+                ],
+                transformers: [
+                    transformerDirective(),
+                ],
+            }),
+        ],
+    });
+}
 ```
+
+以上配置中，使用了 [WindiCSS](https://windicss.org/) 的预设，开启了[属性模式](https://windicss.org/posts/v30.html#attributify-mode)；
 
 最后，在项目入口文件中引入相关 CSS：
 
 ```tsx
 // main.ts
 
-// windicss layers
-import 'virtual:windi-base.css';
-import 'virtual:windi-components.css';
-// your custom styles here
-// import './styles/main.css'
-// windicss utilities should be the last style import
-import 'virtual:windi-utilities.css';
-// windicss devtools support (dev only)
-import 'virtual:windi-devtools';
+// 'uno:[layer-name].css'
+import 'uno:components.css';
+// layers that are not 'components' and 'utilities' will fallback to here
+import 'uno.css';
+// your own CSS
+import './assets/styles/main.less';
+// "utilities" layer will have the highest priority
+import 'uno:utilities.css';
 ```
 
-前三个 CSS 文件可以用 `virtual:windi.css` 代替，如果需要用自定义的样式覆盖某个生成的 CSS，分开导入可以更好地控制样式层顺序 ([layers ordering](https://windicss.org/integrations/vite.html#layers-ordering))；`import 'virtual:windi-devtools'` 表示可以在 DevTools 中修改类名查看效果，详细介绍可查看 [design-in-devtools](https://windicss.org/integrations/vite.html#design-in-devtools)。
-
-更多配置选项以及 Vite 集成查看 [https://windicss.org/integrations/vite.html#configuration](https://windicss.org/integrations/vite.html#configuration)。Windi CSS  配置与 Tailwind CSS 相似，详细的配置说明可以参考 [Tailwind CSS - configuration](https://tailwindcss.com/docs/configuration)。
-
-### 特性
+### 特性(WindiCSS)
 
 1⃣️  **自动值推导** [https://cn.windicss.org/features/value-auto-infer.html](https://cn.windicss.org/features/value-auto-infer.html)
 
@@ -1230,23 +1220,9 @@ import 'virtual:windi-devtools';
 }
 ```
 
-3⃣️  ****Shortcuts**** [https://cn.windicss.org/features/shortcuts.html](https://cn.windicss.org/features/shortcuts.html)
+3⃣️  ****Shortcuts**** [https://github.com/unocss/unocss#shortcuts](https://github.com/unocss/unocss#shortcuts)
 
 允许把工具类合集组合在一起，不需要重复写。
-
-```tsx
-// windi.config.ts
-export default {
-    theme: {
-        /* ... */
-    },
-    shortcuts: {
-        'btn': 'py-2 px-4 font-semibold rounded-lg shadow-md',
-    },
-}
-```
-
-配置以上 shortcuts 后，使用 `btn` 和 `py-2 px-4 font-semibold rounded-lg shadow-md` 相同。
 
 4⃣️  ****Important 前缀**** [https://cn.windicss.org/features/important-prefix.html](https://cn.windicss.org/features/important-prefix.html)
 
@@ -1294,9 +1270,9 @@ export default {
 }
 ```
 
-其他指令还有：`@variants`****,****  `@screen`, `@layer`, `theme()` 。
+其他指令还有：`@variants`, `@screen`, `@layer`, `theme()` 。
 
-6⃣️  **属性化模式** [https://cn.windicss.org/features/attributify.html](https://cn.windicss.org/features/attributify.html)
+6⃣️  **属性模式** [https://cn.windicss.org/features/attributify.html](https://cn.windicss.org/features/attributify.html)
 
 为了避免 class 的值太多，造成代码的可读性降低，推荐使用属性化模式，将工具类分组，语法是：
 
@@ -1372,23 +1348,7 @@ export default {
 ```
 </details>
 
-属性可能会名称冲突，可以通过配置自定义前缀解决：
-
-```tsx
-// windi.config.ts
-
-export default {
-    attributify: {
-        prefix: 'w:',
-    },
-}
-```
-
-```tsx
-<button w:bg="blue-400">btn</button>
-```
-
-因为出现命名冲突毕竟是少数，添加前缀写法更冗余，可以直接将有冲突的属性改为 class：
+属性可能会名称冲突，直接将有冲突的属性改为 class：
 
 ```html
 <template>
@@ -1404,42 +1364,13 @@ export default {
 
 ### VS Code 插件
 
-[Windi CSS Intellisense](https://marketplace.visualstudio.com/items?itemName=voorjaar.windicss-intellisense) 通过提供给 Visual Studio Code 用户一些特性的方式来提高 Windi 的开发体验，例如：自动补全、语法高亮、代码折叠和构建。
+[UnoCSS Intellisense](https://marketplace.visualstudio.com/items?itemName=antfu.unocss) 通过提供给 Visual Studio Code 用户一些特性的方式来提高 UnoCSS 的开发体验，例如：自动补全、语法高亮。
 
 ## 🚀 样式
 
-项目中依然采用 Less 作为 CSS 与处理器，因为 Windi CSS 还是不能完全摆脱手写 CSS，比如以下几种情况：
+项目中依然采用 Less 作为 CSS 预处理器。
 
-- 复杂选择器
-
-```css
-.container:hover {
-    .item {
-        background-color: #fff;
-    }
-    .text {
-        color: red;
-    }
-}
-```
-
-- CSS function
-
-```css
-.container {
-    height: calc(100vh - 10px);
-}
-```
-
-- 多种属性复用
-
-```css
-.item {
-    @apply p-2 border-b flex justify-between font-mono;
-}
-```
-
-`./src/assets/styles/main.less` 可用于存放公共样式，如 UI 组件库样式改写等。
+`./src/assets/styles/main.less` 可用于存放公共样式。
 
 ## 🚀 Stylelint
 
