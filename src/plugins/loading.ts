@@ -36,11 +36,15 @@ export default function(axios: AxiosInstance) {
     );
     axios.interceptors.response.use(
         response => {
-            loading.close();
+            if (response.config.loading !== false) {
+                loading.close();
+            }
             return response;
         },
         error => {
-            loading.close();
+            if (error.config.loading !== false) {
+                loading.close();
+            }
             return Promise.reject(error);
         },
     );
