@@ -95,7 +95,7 @@ axios.get('/xxx');
 </script>
 ```
 
-通常情况下，发请求需要显示 loading 动画，所有请求都响应后关闭动画，可在 `src/plugins/loading.ts` 中修改具体的 loading 逻辑。对于不需要 loading 动画的请求需要在配置中添加 `loading` 属性：
+通常情况下，发请求需要显示 loading 动画，所有请求都响应后关闭动画，可在 `src/plugins/loading.ts` 中修改具体的 loading 逻辑。对于不需要 loading 动画的请求可以在配置中添加 `loading` 属性：
 
 ```javascript
 axios.get('/xxx', { loading: false });
@@ -842,7 +842,6 @@ export default defineConfig({
                 'vue',
                 'vue-router',
                 '@vueuse/core',
-                // 'vitest',
             ],
             dts: 'src/types/auto-imports.d.ts',
             eslintrc: {
@@ -966,17 +965,7 @@ const { counter } = storeToRefs(store); // store.counter
 
 ## 🚀 图标
 
-项目中图标的来源一般有三部分：
-
-- **UI 组件库图标**。比如 @element-plus/icons-vue；
-- **本地图标**。比如设计给的 svg 文件，从 iconfont 下载的 svg 文件等；
-- **第三方图标库**。比如 FontAwesome, Material Design Icons, DashIcons, Feather Icons, EmojiOne, Noto Emoji 等。
-
-通过 [Iconify](https://github.com/iconify/iconify) 图标框架，可以方便地使用**任何第三方图标库**（包括 element-plus, ant-design）。通过 [unplugin-icons](https://github.com/antfu/unplugin-icons) vite 插件实现**图标组件化**，可以将第三方图标库和本地图标包装成组件，它还提供了**自动安装**、**自动引入**、**按需加载**的功能。
-
-### 📦 安装
-
-Iconify 的图标资源可以通过 unplugin-icons 在需要的时候自动安装，项目中只手动安装了 unplugin-icons 插件。
+通过 [unplugin-icons](https://github.com/antfu/unplugin-icons) vite 插件实现**图标组件化**，可以将本地图标包装成组件，它还提供了**自动引入**、**按需加载**的功能。
 
 ### ⚙️ 配置
 
@@ -990,15 +979,14 @@ export default defineConfig({
         Components({
             resolvers: [
                 IconsResolver({
-                    prefix: 'i',
-                    customCollections: ['my-icons'],
+                    prefix: false,
+                    customCollections: ['icons'],
                 }),
             ],
         }),
         Icons({
-            autoInstall: true,
             customCollections: {
-                'my-icons': FileSystemIconLoader('./src/assets/icons'),
+                'icons': FileSystemIconLoader('./src/assets/icons'),
             },
         }),
     ],
@@ -1007,11 +995,10 @@ export default defineConfig({
 
 配置说明：
 
-- `autoInstall: true` 用于启用自动安装图标库的功能，使用图标无需提前安装。
 - `IconsResolver` 用于将组件化后的图标组件自动引入，可以直接在 template 中使用。
-- `prefix: 'i'` 用于设置组件的前缀，默认为 ‘i’，设置 false 表示无前缀。
+- `prefix: false` 用于设置组件的前缀，默认为 ‘i’，设置 false 表示无前缀。
 - Icons `customCollections` 用于加载图标，将 './src/assets/icons' 目录下所有 svg 作为一个自定义的图标集。
-- IconsResolver `customCollections: ['my-icons']` 添加自定义图标集。
+- IconsResolver `customCollections: ['icons']` 添加自定义图标集。
 
 还可以给所有图标设置默认配置：
 
@@ -1039,22 +1026,7 @@ Icons({
 
 ### 🧐 使用
 
-使用一个图标，可以首先考虑第三方图标库：
-
-1. 打开 [https://icones.js.org](https://icones.js.org/) 输入关键字搜索，如 ‘home’；
-2. 在搜索结果中点击需要使用的图标，得到图标名称，如 ‘bx:home’。
-3. 在模版中使用图标组件，组件名为 `i-bx-home` ，其中 ’i’ 表示组件前缀， ’bx’ 表示图标集，’home’ 表示图标名，如果项目中不存在 ’bx’ 时，会自动安装 ‘@iconify-json/bx’。
-
-通过插件的处理，使用图标变得非常简单，需要写的代码量也非常少。不过需要按照 `{前缀}-{图标集}-{图标名}` 的命名规则去使用组件。
-
-```html
-<template>
-    <i-bx-home></i-bx-home>  <!-- {prefix}-{collection}-{icon} -->
-    <i-bx-home style="font-size: 40px; color: blue;"></i-bx-home>
-</template>
-```
-
-对于本地图标，只需要把 svg 文件放到 ‘./src/assets/icons’ 目录即可，图标集为 ‘my-icons’，图标名为文件名，推荐使用小写字母，多个单词用短横线链接(kebab-case)：
+只需要把 svg 文件放到 ‘./src/assets/icons’ 目录即可，图标集为 ‘icons’，图标名为文件名，推荐使用小写字母，多个单词用短横线链接(kebab-case)：
 
 ```
 src
@@ -1065,7 +1037,7 @@ src
 
 ```html
 <template>
-    <i-my-icons-about></i-my-icons-about>
+    <icons-about></icons-about>
 </template>
 ```
 
@@ -1076,8 +1048,7 @@ src
 
 declare module 'vue' {
     export interface GlobalComponents {
-        IBxHome: typeof import('~icons/bx/home')['default']
-        IMyIconsAbout: typeof import('~icons/my-icons/about')['default']
+        IconsHome: typeof import('~icons/icons/home')['default']
     }
 }
 ```
@@ -1086,18 +1057,14 @@ declare module 'vue' {
 
 ```html
 <template>
-    <bx-home></bx-home>
-    <i-my-icons-about></i-my-icons-about>
+    <icons-about></icons-about>
 </template>
 <script setup lang="ts">
-import BxHome from '~icons/bx/home’;
-import MyIconsAbout from '~icons/my-icons/about’;
+import MyIconsAbout from '~icons/icons/about’;
 </script>
 ```
 
 引入图标的路径 `~icons/*` 是一个虚拟路径，由 unplugin-icons 插件处理后，找到真实的 svg 文件，然后包装成 vue 组件返回。
-
-> 使用 Iconify IntelliSense VS Code 插件，可以在代码中预览图标。
 
 ### 和 iconfont 字体图标比较
 
@@ -1178,14 +1145,13 @@ import 'uno:utilities.css';
 在类名中使用任意值，然后生成相应的样式，任意值可以是数字(表示 rem)、尺寸(px/vw/em/rem)、分数、颜色(rgba/hex)、变量(CSS变量名)。
 
 ```html
-<div class="w-1/2 p-5px mt-10px bg-hex-b2a8bb"></div>
+<div class="w-1/2 p-5px mt-10px bg-#b2a8bb"></div>
 ```
 
 生成的 CSS 为：
 
 ```css
-/* windicss layer utilities */
-.bg-hex-b2a8bb {
+.bg-#b2a8bb {
     --tw-bg-opacity: 1;
     background-color: rgba(178, 168, 187, var(--tw-bg-opacity));
 }
@@ -1281,7 +1247,11 @@ import 'uno:utilities.css';
 ```
 
 ```html
-<button 
+<div class="text-#ddd" hover="text-#eee"></div>
+```
+
+```html
+<button
     bg="blue-400 hover:blue-500 dark:blue-500 dark:hover:blue-600"
     text="sm white"
     font="mono light"

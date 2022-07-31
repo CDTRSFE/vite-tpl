@@ -6,14 +6,14 @@ declare module 'vue' {
   export interface GlobalComponents {
     ClickOutside: typeof import('./../directives/clickOutside.js')['default']
     Focus: typeof import('./../directives/focus.js')['default']
-    IMyIconsAxios: typeof import('~icons/my-icons/axios')['default']
-    IMyIconsElement: typeof import('~icons/my-icons/element')['default']
-    IMyIconsIconify: typeof import('~icons/my-icons/iconify')['default']
-    IMyIconsPinia: typeof import('~icons/my-icons/pinia')['default']
-    IMyIconsPnpm: typeof import('~icons/my-icons/pnpm')['default']
-    IMyIconsUnocss: typeof import('~icons/my-icons/unocss')['default']
-    IMyIconsVite: typeof import('~icons/my-icons/vite')['default']
-    IMyIconsVueuse: typeof import('~icons/my-icons/vueuse')['default']
+    IconsAxios: typeof import('~icons/icons/axios')['default']
+    IconsElement: typeof import('~icons/icons/element')['default']
+    IconsIconify: typeof import('~icons/icons/iconify')['default']
+    IconsPinia: typeof import('~icons/icons/pinia')['default']
+    IconsPnpm: typeof import('~icons/icons/pnpm')['default']
+    IconsUnocss: typeof import('~icons/icons/unocss')['default']
+    IconsVite: typeof import('~icons/icons/vite')['default']
+    IconsVueuse: typeof import('~icons/icons/vueuse')['default']
     InfoText: typeof import('./../components/InfoText.vue')['default']
   }
 }

@@ -52,8 +52,8 @@ export default (env: ConfigEnv) => {
                 resolvers: [
                     ElementPlusResolver(),
                     IconsResolver({
-                        prefix: 'i',
-                        customCollections: ['my-icons'],
+                        prefix: false,
+                        customCollections: ['icons'],
                     }),
                 ],
             }),
@@ -74,7 +74,7 @@ export default (env: ConfigEnv) => {
             Icons({
                 autoInstall: true,
                 customCollections: {
-                    'my-icons': FileSystemIconLoader('./src/assets/icons'),
+                    icons: FileSystemIconLoader('./src/assets/icons'),
                 },
             }),
             Unocss({
