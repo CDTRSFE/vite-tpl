@@ -5,13 +5,11 @@ import Vue from '@vitejs/plugin-vue';
 import Components from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import AutoImport from 'unplugin-auto-import/vite';
-import Icons from 'unplugin-icons/vite';
-import IconsResolver from 'unplugin-icons/resolver';
-import { FileSystemIconLoader } from 'unplugin-icons/loaders';
 import strip from '@rollup/plugin-strip';
 import Unocss from 'unocss/vite';
 import { presetAttributify, presetWind } from 'unocss';
 import transformerDirective from '@unocss/transformer-directives';
+import ImportIcons, { ImportIconsResolver } from 'vite-plugin-import-icons';
 
 export default (env: ConfigEnv) => {
     return defineConfig({
@@ -51,9 +49,8 @@ export default (env: ConfigEnv) => {
                 dts: 'src/types/components.d.ts',
                 resolvers: [
                     ElementPlusResolver(),
-                    IconsResolver({
-                        prefix: false,
-                        customCollections: ['icons'],
+                    ImportIconsResolver({
+                        collections: ['icons'],
                     }),
                 ],
             }),
@@ -71,11 +68,17 @@ export default (env: ConfigEnv) => {
                     globalsPropValue: true, // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
                 },
             }),
-            Icons({
-                autoInstall: true,
-                customCollections: {
-                    icons: FileSystemIconLoader('./src/assets/icons'),
+            ImportIcons({
+                collections: {
+                    icons: path.resolve(__dirname, './src/assets/icons'),
                 },
+                // transform(svg, collection, icon) {
+                //     // apply fill to this icon on this collection
+                //     if (collection === 'icons' && icon === 'account') {
+                //         return svg.replace(/^<svg /, '<svg fill="currentColor" ');
+                //     }
+                //     return svg;
+                // },
             }),
             Unocss({
                 shortcuts: {

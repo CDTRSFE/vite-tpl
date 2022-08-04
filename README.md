@@ -12,7 +12,7 @@
 +   [VueUse](https://github.com/vueuse/vueuse) - 基于 Composition API 的工具函数集
 +   [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) - 组件自动化加载
 +   [unplugin-auto-import](https://github.com/antfu/unplugin-auto-import) - API 自动按需引入
-+   [unplugin-icons](https://github.com/antfu/unplugin-icons) - 以组件的方式按需引入图标
++   [vite-plugin-import-icons](https://github.com/CDTRSFE/vite-plugin-import-icons) - 以组件的方式按需引入图标
 +   ESLint, Stylelint
 
 ## 使用
@@ -190,7 +190,7 @@ const { copy } = useClipboard({ source: val })
 
 <details>
 <summary>demo</summary><br>
-  
+
 ```js
 import { useEventListener } from '@vueuse/core'
 
@@ -206,7 +206,7 @@ useEventListener(element, 'keydown', (e) => { console.log(e.key) })
 
 <details>
 <summary>demo</summary><br>
-  
+
 ```js
 import { useMediaControls } from '@vueuse/core'
 
@@ -232,7 +232,7 @@ script 标签注入。当组件 mounted 时自动加载 script，组件卸载时
 
 <details>
 <summary>demo</summary><br>
-  
+
 ```jsx
 import { useScriptTag } from '@vueuse/core'
 
@@ -268,7 +268,7 @@ await unload()
 
 <details>
 <summary>demo</summary><br>
-  
+
 ```jsx
 import { useUrlSearchParams } from '@vueuse/core'
 
@@ -291,7 +291,7 @@ params.vueuse = 'awesome'
 
 <details>
 <summary>demo</summary><br>
-  
+
 ```jsx
 <template>
     <div ref="target">Hello world</div>
@@ -322,7 +322,7 @@ onClickOutside(target, (event) => console.log(event))
 
 <details>
 <summary>demo</summary><br>
-  
+
 ```jsx
 import { useMouse } from '@vueuse/core'
 
@@ -337,7 +337,7 @@ const { x, y, sourceType } = useMouse()
 
 <details>
 <summary>demo</summary><br>
-  
+
 ```jsx
 <script setup>
 import { useScroll } from '@vueuse/core'
@@ -362,7 +362,7 @@ const { x, y, isScrolling, arrivedState, directions } = useScroll(el, { offset, 
 
 <details>
 <summary>demo</summary><br>
-  
+
 ```jsx
 import { useIntervalFn } from '@vueuse/core'
 
@@ -398,7 +398,7 @@ const { pause, resume } = useRafFn(() => {
 
 <details>
 <summary>demo</summary><br>
-  
+
 ```jsx
 import { useTimeoutFn } from '@vueuse/core'
 
@@ -497,7 +497,7 @@ const { x, y, top, right, bottom, left, width, height } = useElementBounding(el)
 
 <details>
 <summary>demo</summary><br>
-  
+
 ```jsx
 import { useMouseInElement } from '@vueuse/core'
 
@@ -965,28 +965,27 @@ const { counter } = storeToRefs(store); // store.counter
 
 ## 🚀 图标
 
-通过 [unplugin-icons](https://github.com/antfu/unplugin-icons) vite 插件实现**图标组件化**，可以将本地图标包装成组件，它还提供了**自动引入**、**按需加载**的功能。
+通过 [vite-plugin-import-icons](https://github.com/CDTRSFE/vite-plugin-import-icons) vite 插件实现**图标组件化**，可以将本地图标包装成组件，还有**自动引入**、**按需加载**的功能。
 
 ### ⚙️ 配置
 
 ```jsx
 // vite.config.ts
-import Icons from 'unplugin-icons/vite'
-import IconsResolver from 'unplugin-icons/resolver';
+import path from 'path';
+import ImportIcons, { ImportIconsResolver } from 'vite-plugin-import-icons';
 
 export default defineConfig({
     plugins: [
         Components({
             resolvers: [
-                IconsResolver({
-                    prefix: false,
-                    customCollections: ['icons'],
+                ImportIconsResolver({
+                  	collections: ['icons'],
                 }),
             ],
         }),
-        Icons({
-            customCollections: {
-                'icons': FileSystemIconLoader('./src/assets/icons'),
+        ImportIcons({
+            collections: {
+              	icons: path.resolve(__dirname, './src/assets/icons'),
             },
         }),
     ],
@@ -995,22 +994,8 @@ export default defineConfig({
 
 配置说明：
 
-- `IconsResolver` 用于将组件化后的图标组件自动引入，可以直接在 template 中使用。
-- `prefix: false` 用于设置组件的前缀，默认为 ‘i’，设置 false 表示无前缀。
-- Icons `customCollections` 用于加载图标，将 './src/assets/icons' 目录下所有 svg 作为一个自定义的图标集。
-- IconsResolver `customCollections: ['icons']` 添加自定义图标集。
-
-还可以给所有图标设置默认配置：
-
-```jsx
-Icons({
-    scale: 1.2, // Scale of icons against 1em
-    defaultStyle: '', // Style apply to icons
-    defaultClass: '', // Class names apply to icons
-    compiler: null, // 'vue2', 'vue3', 'jsx'
-    jsx: 'react' // 'react' or 'preact'
-})
-```
+- `ImportIconsResolver` 用于将组件化后的图标组件自动引入，可以直接在 template 中使用。
+- `collections` 用于加载图标，将 './src/assets/icons' 目录下所有 svg 作为一个图标集。
 
 项目中使用了 Typescript，还需要添加类型声明文件 tsconfig.json：
 
@@ -1018,7 +1003,7 @@ Icons({
 {
     "compilerOptions": {
         "types": [
-            "unplugin-icons/types/vue"
+            "vite-plugin-import-icons/types",
         ]
     }
 }
@@ -1053,18 +1038,31 @@ declare module 'vue' {
 }
 ```
 
-如果不使用组件自动加载功能(unplugin-icons/resolver)，则需要先 import :
+如果不使用组件自动加载功能，则需要先 import :
 
 ```html
 <template>
     <icons-about></icons-about>
 </template>
 <script setup lang="ts">
-import MyIconsAbout from '~icons/icons/about’;
+import IconsAbout from '~icons/icons/about’;
 </script>
 ```
 
-引入图标的路径 `~icons/*` 是一个虚拟路径，由 unplugin-icons 插件处理后，找到真实的 svg 文件，然后包装成 vue 组件返回。
+引入图标的路径 `~icons/*` 是一个虚拟路径，由插件处理后，找到真实的 svg 文件，然后包装成 vue 组件返回。
+
+### 批量引入
+
+vite-plugin-import-icons 插件提供了一个 [`import.meta.icons`](https://github.com/CDTRSFE/vite-plugin-import-icons#%E6%89%B9%E9%87%8F%E5%BC%95%E5%85%A5) 函数，用于一次性引入多个图标。
+
+```vue
+<template>
+    <component v-for="(icon, name) in icons" :is="icon" :key="name"></component>
+</template>
+<script>
+const icons = import.meta.icons('icons', 'menu-*')
+</script>
+```
 
 ### 和 iconfont 字体图标比较
 

@@ -18,7 +18,7 @@
         "types": [
             "vite/client",
             "@types/node",
-            "unplugin-icons/types/vue",
+            "vite-plugin-import-icons/types",
             "element-plus/global"
         ],
         "paths": {
