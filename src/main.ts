@@ -4,6 +4,8 @@ import router from './router';
 import App from './App.vue';
 import axios from '@/plugins/axios';
 
+// 重置样式
+import 'tp-common.css';
 // 'uno:[layer-name].css'
 import 'uno:components.css';
 // layers that are not 'components' and 'utilities' will fallback to here

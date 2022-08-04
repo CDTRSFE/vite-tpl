@@ -8,7 +8,6 @@ declare module 'vue' {
     Focus: typeof import('./../directives/focus.js')['default']
     IconsAxios: typeof import('~icons/icons/axios')['default']
     IconsElement: typeof import('~icons/icons/element')['default']
-    IconsIconify: typeof import('~icons/icons/iconify')['default']
     IconsPinia: typeof import('~icons/icons/pinia')['default']
     IconsPnpm: typeof import('~icons/icons/pnpm')['default']
     IconsUnocss: typeof import('~icons/icons/unocss')['default']
