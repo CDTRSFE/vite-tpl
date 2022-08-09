@@ -49,9 +49,7 @@ export default (env: ConfigEnv) => {
                 dts: 'src/types/components.d.ts',
                 resolvers: [
                     ElementPlusResolver(),
-                    ImportIconsResolver({
-                        collections: ['icons'],
-                    }),
+                    ImportIconsResolver(),
                 ],
             }),
             AutoImport({

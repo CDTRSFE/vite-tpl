@@ -978,9 +978,7 @@ export default defineConfig({
     plugins: [
         Components({
             resolvers: [
-                ImportIconsResolver({
-                  	collections: ['icons'],
-                }),
+                ImportIconsResolver(),
             ],
         }),
         ImportIcons({
