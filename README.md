@@ -45,7 +45,7 @@ pnpm dev
 │   │       └── main.less            # 全局样式
 │   ├── components                   # 全局组件文件夹
 │   ├── directives                   # 全局指令文件夹
-│   │   └── focus.js
+│   │   └── Focus.js
 │   ├── main.ts                      # 入口文件
 │   ├── plugins
 │   │   ├── axios.ts                 # axios
@@ -759,12 +759,22 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 export default defineConfig({
     plugins: [
         Components({
-            dirs: ['src/components', 'src/directives'],
-            extensions: ['vue', 'js'],
+            dirs: ['src/components'],
+            extensions: ['vue', 'js', 'ts'],
             include: [/\.vue$/, /\.vue\?vue/],
             dts: 'src/types/components.d.ts',
             resolvers: [
                 ElementPlusResolver(),
+                // 自动引入 @/directives 目录下的指令
+                {
+                    type: 'directive',
+                    resolve(name) {
+                        return {
+                            name: 'default',
+                            from: `@/directives/${name}`,
+                        };
+                    },
+                },
             ]
         }),
     ],
@@ -783,7 +793,7 @@ export default defineConfig({
 │   ├── FullLoading.vue
 │   └── TabSelect.vue
 ├── directives
-│   └── focus.js
+│   └── Focus.js
 ```
 
 ```html
@@ -808,7 +818,7 @@ import FullLoading from '@/components/FullLoading.vue';
 import ElButton from 'element-plus/es/components/button';
 import 'element-plus/lib/theme-chalk/base.css';
 import 'element-plus/lib/theme-chalk/el-button.css';
-import vFocus from '@/directives/focus.js';
+import vFocus from '@/directives/Focus.js';
 </script>
 ```
 
