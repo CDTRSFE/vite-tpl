@@ -8,7 +8,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ClickOutside: typeof import('./../directives/clickOutside.js')['default']
-    Focus: typeof import('./../directives/focus.js')['default']
+    Focus: typeof import('../directives/Focus.js')['default']
     IconsAxios: typeof import('~icons/icons/axios')['default']
     IconsElement: typeof import('~icons/icons/element')['default']
     IconsPinia: typeof import('~icons/icons/pinia')['default']
@@ -19,5 +19,8 @@ declare module '@vue/runtime-core' {
     InfoText: typeof import('./../components/InfoText.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+  }
+  export interface ComponentCustomProperties {
+    vFocus: typeof import('@/directives/Focus')['default']
   }
 }

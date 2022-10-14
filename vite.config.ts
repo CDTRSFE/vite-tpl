@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 import type { ConfigEnv } from 'vite';
 import Vue from '@vitejs/plugin-vue';
 import Components from 'unplugin-vue-components/vite';
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+import { ElementPlusResolver, VueUseDirectiveResolver, VueUseComponentsResolver } from 'unplugin-vue-components/resolvers';
 import AutoImport from 'unplugin-auto-import/vite';
 import strip from '@rollup/plugin-strip';
 import Unocss from 'unocss/vite';
@@ -40,16 +40,28 @@ export default (env: ConfigEnv) => {
             }),
             // https://github.com/antfu/unplugin-vue-components
             Components({
-                // todo
-                dirs: ['src/components', 'src/directives'],
+                dirs: ['src/components'],
                 deep: false,
-                extensions: ['vue', 'js'],
+                extensions: ['vue', 'js', 'ts'],
                 include: [/\.vue$/, /\.vue\?vue/],
                 // 生成全局类型声明文件，以便 volar 类型提示
                 dts: 'src/types/components.d.ts',
                 resolvers: [
                     ElementPlusResolver(),
                     ImportIconsResolver(),
+                    VueUseDirectiveResolver(),
+                    VueUseComponentsResolver(),
+                    // 自动引入 src/directives 目录下的指令，
+                    // 文件名用 Pascal 命名
+                    {
+                        type: 'directive',
+                        resolve(name) {
+                            return {
+                                name: 'default',
+                                from: `@/directives/${name}`,
+                            };
+                        },
+                    },
                 ],
             }),
             AutoImport({
