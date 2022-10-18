@@ -51,17 +51,6 @@ export default (env: ConfigEnv) => {
                     ImportIconsResolver(),
                     VueUseDirectiveResolver(),
                     VueUseComponentsResolver(),
-                    // 自动引入 src/directives 目录下的指令，
-                    // 文件名用 Pascal 命名
-                    {
-                        type: 'directive',
-                        resolve(name) {
-                            return {
-                                name: 'default',
-                                from: `@/directives/${name}`,
-                            };
-                        },
-                    },
                 ],
             }),
             AutoImport({

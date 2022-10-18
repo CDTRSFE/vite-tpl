@@ -46,6 +46,7 @@ pnpm dev
 │   ├── components                   # 全局组件文件夹
 │   ├── directives                   # 全局指令文件夹
 │   │   └── Focus.js
+│   │   └── index.ts                 # 注册指令
 │   ├── main.ts                      # 入口文件
 │   ├── plugins
 │   │   ├── axios.ts                 # axios
@@ -745,7 +746,7 @@ motionControl.resume()
 
 ## 🚀 组件自动化加载
 
-使用 [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) 自动按需引入组件或指令，也无需注册，使用全局组件和 UI 组件库时更加方便。配置后，项目中放在 `'src/components'`, `'src/directives'` 目录下的组件 / 指令可在全局直接使用。
+使用 [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) 自动按需引入组件，也无需注册，使用全局组件和 UI 组件库时更加方便。配置后，项目中放在 `'src/components'` 目录下的组件可在全局直接使用。
 
 ### ⚙️ 配置
 
@@ -765,16 +766,6 @@ export default defineConfig({
             dts: 'src/types/components.d.ts',
             resolvers: [
                 ElementPlusResolver(),
-                // 自动引入 @/directives 目录下的指令
-                {
-                    type: 'directive',
-                    resolve(name) {
-                        return {
-                            name: 'default',
-                            from: `@/directives/${name}`,
-                        };
-                    },
-                },
             ]
         }),
     ],
@@ -792,15 +783,12 @@ export default defineConfig({
 ├── components
 │   ├── FullLoading.vue
 │   └── TabSelect.vue
-├── directives
-│   └── Focus.js
 ```
 
 ```html
 <template>
     <full-loading></full-loading>
     <el-button type="primary">btn</el-button>
-    <input v-focus type="text" />
 </template>
 ```
 
@@ -810,7 +798,6 @@ export default defineConfig({
 <template>
     <full-loading></full-loading>
     <el-button type="primary">btn</el-button>
-    <input v-focus type="text" />
 </template>
 
 <script setup lang="ts">
@@ -818,7 +805,6 @@ import FullLoading from '@/components/FullLoading.vue';
 import ElButton from 'element-plus/es/components/button';
 import 'element-plus/lib/theme-chalk/base.css';
 import 'element-plus/lib/theme-chalk/el-button.css';
-import vFocus from '@/directives/Focus.js';
 </script>
 ```
 
