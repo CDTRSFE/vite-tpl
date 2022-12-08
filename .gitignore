@@ -7,4 +7,5 @@ node_modules
 .idea/
 auto-imports.d.ts
 components.d.ts
+.eslintrc-auto-import.json
 __unconfig_vite.config.ts
