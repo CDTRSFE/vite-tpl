@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 import type { ConfigEnv } from 'vite';
 import Vue from '@vitejs/plugin-vue';
 import Components from 'unplugin-vue-components/vite';
-import { ElementPlusResolver, VueUseDirectiveResolver, VueUseComponentsResolver } from 'unplugin-vue-components/resolvers';
+import { AntDesignVueResolver, VueUseDirectiveResolver, VueUseComponentsResolver } from 'unplugin-vue-components/resolvers';
 import AutoImport from 'unplugin-auto-import/vite';
 import strip from '@rollup/plugin-strip';
 import Unocss from 'unocss/vite';
@@ -47,7 +47,7 @@ export default (env: ConfigEnv) => {
                 // 生成全局类型声明文件，以便 volar 类型提示
                 dts: 'src/types/components.d.ts',
                 resolvers: [
-                    ElementPlusResolver(),
+                    AntDesignVueResolver(),
                     ImportIconsResolver(),
                     VueUseDirectiveResolver(),
                     VueUseComponentsResolver(),

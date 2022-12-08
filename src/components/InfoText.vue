@@ -14,5 +14,5 @@
 
 <script lang="ts" setup>
 const info = ref('Vue3 + Vite + TS');
-const features = ref('Element-Plus / Axios / UnoCSS / Pinia / VueUse / component auto-import');
+const features = ref('AntDesignVue / Axios / UnoCSS / Pinia / VueUse / component auto-import');
 </script>

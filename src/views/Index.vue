@@ -3,7 +3,7 @@
     <info-text></info-text>
     <div class="flex justify-center mt-30px items-center space-x-20px">
         <icons-vite></icons-vite>
-        <icons-element></icons-element>
+        <icons-antdv width="30px"></icons-antdv>
         <icons-axios class="w-146px"></icons-axios>
         <icons-unocss class="w-50px h-28px"></icons-unocss>
         <icons-pinia class="h-30px w-auto"></icons-pinia>

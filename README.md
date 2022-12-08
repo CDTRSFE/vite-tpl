@@ -3,8 +3,7 @@
 ## 特性
 
 +   Vue3, Vite, TS
-
-+   [element-plus](https://element-plus.gitee.io/zh-CN/) - 基于 Vue3 的组件库
++   [ant-design-vue](https://www.antdv.com/docs/vue/introduce-cn) - 基于 Vue3 的组件库
 +   [axios](https://axios-http.com/) - 基于 promise 的 HTTP 库
 +   [PNPM](https://pnpm.io/zh/) - 快速的，节省磁盘空间的包管理工具
 +   [UnoCSS](https://github.com/unocss/unocss) - 原子化 CSS 引擎
@@ -755,7 +754,7 @@ motionControl.resume()
 
 import { defineConfig } from 'vite';
 import Components from 'unplugin-vue-components/vite';
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 
 export default defineConfig({
     plugins: [
@@ -765,7 +764,7 @@ export default defineConfig({
             include: [/\.vue$/, /\.vue\?vue/],
             dts: 'src/types/components.d.ts',
             resolvers: [
-                ElementPlusResolver(),
+                AntDesignVueResolver(),
             ]
         }),
     ],
@@ -774,7 +773,7 @@ export default defineConfig({
 
 + `dirs` 指定查找组件的相对路径，此目录下的组件并非全局注册。
 + `dts: 'src/types/components.d.ts'` 表示生成全局类型声明文件，用于 volar 类型提示。
-+ `ElementPlusResolver` 用于解析 element-plus 组件引入，包括 loading, popover, infinite-scroll 三个指令。
++ `AntDesignVueResolver` 用于解析 ant-design-vue 组件引入。
 
 ### 🧐 使用
 
@@ -788,7 +787,7 @@ export default defineConfig({
 ```html
 <template>
     <full-loading></full-loading>
-    <el-button type="primary">btn</el-button>
+    <a-button type="primary">btn<a/-button>
 </template>
 ```
 
@@ -797,14 +796,13 @@ export default defineConfig({
 ```html
 <template>
     <full-loading></full-loading>
-    <el-button type="primary">btn</el-button>
+    <a-button type="primary">btn</a-button>
 </template>
 
 <script setup lang="ts">
 import FullLoading from '@/components/FullLoading.vue';
-import ElButton from 'element-plus/es/components/button';
-import 'element-plus/lib/theme-chalk/base.css';
-import 'element-plus/lib/theme-chalk/el-button.css';
+import ElButton from 'ant-design-vue/es/button';
+import 'ant-design-vue/es/button/style/css';
 </script>
 ```
 

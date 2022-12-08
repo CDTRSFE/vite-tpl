@@ -1,25 +1,25 @@
 import type { AxiosInstance } from 'axios';
-import 'element-plus/es/components/loading/style/css';
-import { ElLoading } from 'element-plus';
+// import 'element-plus/es/components/loading/style/css';
+// import { ElLoading } from 'element-plus';
 
-let loadingInstance: ReturnType<typeof ElLoading.service>;
+// let loadingInstance: ReturnType<typeof ElLoading.service>;
 
 export default function(axios: AxiosInstance) {
     const loading = {
         num: 0,
         open() {
             if (this.num === 0) {
-                loadingInstance = ElLoading.service({
-                    text: '玩命加载中...',
-                    background: 'rgba(255, 255, 255, 0.6)',
-                });
+                // loadingInstance = ElLoading.service({
+                //     text: '玩命加载中...',
+                //     background: 'rgba(255, 255, 255, 0.6)',
+                // });
             }
             this.num++;
         },
         close() {
             this.num--;
             if (this.num === 0) {
-                loadingInstance.close();
+                // loadingInstance.close();
             }
         },
     };
