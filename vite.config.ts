@@ -112,14 +112,12 @@ export default (env: ConfigEnv) => {
                     }],
                     // 文本超出省略
                     // usage: class="ellipsis ellipsis-2 ellipsis-3"
-                    [/^ellipsis(-(\d+))?$/, ([,, d], { rawSelector }) => {
-                        return `.${rawSelector} {
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                            display: -webkit-box;
-                            -webkit-line-clamp: ${d || 1};
-                            -webkit-box-orient: vertical;
-                        }`;
+                    [/^ellipsis(-(\d*))?$/, ([,, d], { rawSelector }) => {
+                        return `.${rawSelector} {${
+                            Number(d) > 1
+                                ? `overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: ${d}; -webkit-box-orient: vertical;`
+                                : 'overflow: hidden; text-overflow: ellipsis; white-space: nowrap;'
+                        }}`;
                     }],
                 ],
             }),
