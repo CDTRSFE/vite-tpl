@@ -2,6 +2,7 @@ import path from 'path';
 import { defineConfig } from 'vite';
 import type { ConfigEnv } from 'vite';
 import Vue from '@vitejs/plugin-vue';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 import Components from 'unplugin-vue-components/vite';
 import { AntDesignVueResolver, VueUseDirectiveResolver, VueUseComponentsResolver } from 'unplugin-vue-components/resolvers';
 import AutoImport from 'unplugin-auto-import/vite';
@@ -34,6 +35,7 @@ export default (env: ConfigEnv) => {
         },
         plugins: [
             Vue(),
+            vueJsx(),
             // 生产环境删除 debugger 和 console
             env.mode === 'production' && strip({
                 include: ['**/*.js', '**/*.ts', '**/*.vue'],
