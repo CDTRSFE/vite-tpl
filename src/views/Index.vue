@@ -12,6 +12,6 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="tsx">
 import VueLogo from './VueLogo.vue';
 </script>

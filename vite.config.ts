@@ -49,7 +49,9 @@ export default (env: ConfigEnv) => {
                 // 生成全局类型声明文件，以便 volar 类型提示
                 dts: 'src/types/components.d.ts',
                 resolvers: [
-                    AntDesignVueResolver(),
+                    AntDesignVueResolver({
+                        importStyle: false,
+                    }),
                     ImportIconsResolver(),
                     VueUseDirectiveResolver(),
                     VueUseComponentsResolver(),
