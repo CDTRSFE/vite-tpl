@@ -13,7 +13,6 @@
         "noUnusedLocals": true,
         "strictNullChecks": true,
         "jsx": "preserve",
-        "allowImportingTsExtensions": true,
         // "allowJs": true,
         "forceConsistentCasingInFileNames": true,
         "types": [
