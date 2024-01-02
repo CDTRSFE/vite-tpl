@@ -11,6 +11,10 @@ import Unocss from 'unocss/vite';
 import { presetAttributify, presetWind } from 'unocss';
 import transformerDirective from '@unocss/transformer-directives';
 import ImportIcons, { ImportIconsResolver } from 'vite-plugin-import-icons';
+import zipPack from 'vite-plugin-zip-pack';
+
+// 项目文件夹名
+const folderName = path.basename(__dirname);
 
 export default (env: ConfigEnv) => {
     return defineConfig({
@@ -124,6 +128,10 @@ export default (env: ConfigEnv) => {
                         }}`;
                     }],
                 ],
+            }),
+            zipPack({
+                outDir: './',
+                outFileName: `${folderName}.zip`,
             }),
         ],
     });
