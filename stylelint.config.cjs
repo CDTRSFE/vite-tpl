@@ -1,5 +1,6 @@
 module.exports = {
     extends: '@trscd/stylelint-config-tpconfig',
+    // extends: '../stylelint-config-tpconfig',
     ignoreFiles: ['./public/**/*'],
     rules: {
         // https://github.com/vuejs/rfcs/blob/master/active-rfcs/0023-scoped-styles-changes.md
