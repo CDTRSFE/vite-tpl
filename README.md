@@ -74,6 +74,13 @@ pnpm dev
 └── vite.config.ts                   # vite 配置
 ```
 
+## node 版本
+
+eslint: 
+Node.js v18.18.0 and above
+Node.js v20.9.0 and above
+Node.js v21 and above
+
 ## 🚀 axios
 
 项目中引入了 axios，拦截器等相关配置在 `src/plugins/axios.ts` 中，axios 实例可作为全局变量直接访问，也可通过 Vue 组件的全局属性访问。
