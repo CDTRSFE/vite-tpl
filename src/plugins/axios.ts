@@ -19,15 +19,19 @@ const _axios = axios.create(config);
 loading(_axios);
 
 _axios.interceptors.request.use(
-    config => {
+    (config) => {
         // 后端在接收post请求时，有接收json数据格式的情况，因此只有在content-type为如下情况下才转换数据格式
         const contentType = config.headers?.['Content-Type'];
-        if (config.method === 'post' && ((!contentType && config.data.toString() === '[object Object]') || contentType === 'application/x-www-form-urlencoded')) {
+        if (
+            config.method === 'post' &&
+            ((!contentType && config.data.toString() === '[object Object]') ||
+                contentType === 'application/x-www-form-urlencoded')
+        ) {
             config.data = qs.stringify(config.data); // post请求格式化数据
         }
         return config;
     },
-    error => {
+    (error) => {
         // Do something with request error
         return Promise.reject(error);
     },
@@ -35,11 +39,11 @@ _axios.interceptors.request.use(
 
 // Add a response interceptor
 _axios.interceptors.response.use(
-    response => {
+    (response) => {
         // Do something with response data
         return response;
     },
-    error => {
+    (error) => {
         error.message = '连接服务器失败';
         if (error.response) {
             const statusMap: Record<number, string> = {

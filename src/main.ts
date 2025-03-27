@@ -19,10 +19,7 @@ import 'uno:utilities.css';
 
 const pinia = createPinia();
 
-const app = createApp(App)
-    .use(router)
-    .use(pinia)
-    .use(axios);
+const app = createApp(App).use(router).use(pinia).use(axios);
 directive(app);
 app.mount('#app');
 

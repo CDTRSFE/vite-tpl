@@ -3,15 +3,18 @@
 </template>
 <script lang="ts" setup>
 // 大屏用于缩放 <body> 的容器组件
-const props = withDefaults(defineProps<{
-    w?: number;
-    h?: number;
-    fit?: 'contain' | 'fill';
-}>(), {
-    w: 1920,
-    h: 1080,
-    fit: 'fill',
-});
+const props = withDefaults(
+    defineProps<{
+        w?: number;
+        h?: number;
+        fit?: 'contain' | 'fill';
+    }>(),
+    {
+        w: 1920,
+        h: 1080,
+        fit: 'fill',
+    },
+);
 
 const init = () => {
     const w = window.innerWidth;

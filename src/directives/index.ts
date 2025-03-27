@@ -5,8 +5,8 @@ const directives = import.meta.glob<Directive>(['@/directives/*.js', '!@/directi
     eager: true,
 });
 
-export default function(vm: App) {
-    Object.keys(directives).forEach(k => {
+export default function (vm: App) {
+    Object.keys(directives).forEach((k) => {
         const match = k.match(/([^/]+).js/);
         const name = match && match[1];
         name && vm.directive(name, directives[k]);

@@ -1,13 +1,21 @@
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import js from '@eslint/js';
 import eslintPluginVue from 'eslint-plugin-vue';
 import importPlugin from 'eslint-plugin-import';
 import ts from 'typescript-eslint';
 import unicornPlugin from 'eslint-plugin-unicorn';
 import globals from 'globals';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 
 // 读取自动导入配置
-const autoImport = JSON.parse(readFileSync('./.eslintrc-auto-import.json', 'utf8'));
+let autoImport = { globals: {} };
+try {
+    if (existsSync('./.eslintrc-auto-import.json')) {
+        autoImport = JSON.parse(readFileSync('./.eslintrc-auto-import.json', 'utf8'));
+    }
+} catch (_) {
+    //
+}
 
 export default [
     js.configs.recommended,
@@ -48,8 +56,6 @@ export default [
             // 基础规则
             'no-console': 'warn',
             'no-debugger': 'warn',
-            // 缩进使用 4 个空格 默认就是4个
-            'indent': ['error', 4, { SwitchCase: 1 }],
             // 使用驼峰命名约定
             // 'camelcase': ['warn', { properties: 'always' }],
             // 禁止函数圆括号之前有空格
@@ -58,8 +64,6 @@ export default [
             'comma-dangle': ['error', 'always-multiline'],
             // generator 函数中 * 号左边有空格右边不允许有空格? es6建议星号后面有空格，前面没有
             'generator-star-spacing': ['error', 'after'],
-            // 语句末尾使用分号
-            'semi': ['error', 'always'],
             // 强制最大连续空行数为1，强制文件末尾和文件开始的最大连续空行数为1和0
             'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0, maxBOF: 0 }],
             // 强制在 yield* 表达式中前面没空格后面有空格
@@ -83,8 +87,6 @@ export default [
             'prefer-spread': 'error',
             // 使用模板字面量而非字符串拼接
             'prefer-template': 'error',
-            // 箭头函数参数在可以省略括号的地方不使用括号
-            'arrow-parens': ['error', 'as-needed'],
             // 变量的使用限制在其定义的作用域范围内
             'block-scoped-var': 'error',
             // 不建议使用 alert、confirm 和 prompt
@@ -157,19 +159,25 @@ export default [
         },
         rules: {
             // 每行最多的属性个数
-            'vue/max-attributes-per-line': ['error', {
-                singleline: 5,
-            }],
-            // 标签自闭和
-            'vue/html-self-closing': ['error', {
-                html: {
-                    void: 'always',
-                    normal: 'never',
-                    component: 'never',
+            'vue/max-attributes-per-line': [
+                'error',
+                {
+                    singleline: 5,
                 },
-                svg: 'any',
-                math: 'any',
-            }],
+            ],
+            // 标签自闭和
+            'vue/html-self-closing': [
+                'error',
+                {
+                    html: {
+                        void: 'always',
+                        normal: 'never',
+                        component: 'never',
+                    },
+                    svg: 'any',
+                    math: 'any',
+                },
+            ],
             // 组件 name 属性值的格式（驼峰）
             'vue/component-definition-name-casing': 'error',
             // 允许使用 v-html
@@ -182,7 +190,7 @@ export default [
         },
     },
     {
-        files: ['**/*.{ts,tsx,vue}'],
+        files: ['**/*.{ts,tsx,vue,js,mjs,cjs}'],
         plugins: {
             '@typescript-eslint': ts.plugin,
         },
@@ -191,16 +199,18 @@ export default [
             'no-unused-vars': 'off',
             'no-use-before-define': 'off',
             'no-redeclare': 'off',
-            '@typescript-eslint/no-unused-vars': ["error",
+            '@typescript-eslint/no-unused-vars': [
+                'error',
                 {
-                    args: "all",
-                    argsIgnorePattern: "^_",
-                    caughtErrors: "all",
-                    caughtErrorsIgnorePattern: "^_",
-                    destructuredArrayIgnorePattern: "^_",
-                    varsIgnorePattern: "^_",
+                    args: 'all',
+                    argsIgnorePattern: '^_',
+                    caughtErrors: 'all',
+                    caughtErrorsIgnorePattern: '^_',
+                    destructuredArrayIgnorePattern: '^_',
+                    varsIgnorePattern: '^_',
                     ignoreRestSiblings: true,
-                }],
+                },
+            ],
             '@typescript-eslint/no-use-before-define': ['error', { functions: false, classes: false, variables: true }],
             '@typescript-eslint/no-redeclare': 'error',
             '@typescript-eslint/ban-ts-comment': ['error', { 'ts-ignore': 'allow-with-description' }],
@@ -215,4 +225,5 @@ export default [
             '@typescript-eslint/no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
         },
     },
+    eslintPluginPrettierRecommended,
 ];

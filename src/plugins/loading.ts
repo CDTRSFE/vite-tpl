@@ -4,7 +4,7 @@ import type { AxiosInstance } from 'axios';
 
 // let loadingInstance: ReturnType<typeof ElLoading.service>;
 
-export default function(axios: AxiosInstance) {
+export default function (axios: AxiosInstance) {
     const loading = {
         num: 0,
         open() {
@@ -24,24 +24,24 @@ export default function(axios: AxiosInstance) {
         },
     };
     axios.interceptors.request.use(
-        config => {
+        (config) => {
             if (config.loading !== false) {
                 loading.open();
             }
             return config;
         },
-        error => {
+        (error) => {
             return Promise.reject(error);
         },
     );
     axios.interceptors.response.use(
-        response => {
+        (response) => {
             if (response.config.loading !== false) {
                 loading.close();
             }
             return response;
         },
-        error => {
+        (error) => {
             if (error.config.loading !== false) {
                 loading.close();
             }

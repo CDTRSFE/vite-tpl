@@ -4,9 +4,7 @@
             {{ info }}
         </span>
     </div>
-    <p text="center hex-bbb" font="italic" m="y-20px">
-        Vite Starter Template
-    </p>
+    <p text="center hex-bbb" font="italic" m="y-20px">Vite Starter Template</p>
     <div class="text-center text-blue-300 text-16px font-bold">
         {{ features }}
     </div>
