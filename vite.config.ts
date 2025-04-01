@@ -13,6 +13,7 @@ import AutoImport from 'unplugin-auto-import/vite';
 import strip from '@rollup/plugin-strip';
 import ImportIcons, { ImportIconsResolver } from 'vite-plugin-import-icons';
 import zipPack from 'vite-plugin-zip-pack';
+import UnoCSS from 'unocss/vite';
 
 // 项目文件夹名
 const folderName = path.basename(__dirname);
@@ -89,6 +90,7 @@ export default (env: ConfigEnv) => {
                 outDir: './',
                 outFileName: `${folderName}.zip`,
             }),
+            UnoCSS(),
         ],
     });
 };
