@@ -32,6 +32,7 @@
         "@vueuse/core": "^13.0.0",
         "ant-design-vue": "^4.2.6",
         "axios": "^1.8.4",
+        "date-fns": "^4.1.0",
         "lodash": "^4.17.21",
         "pinia": "^3.0.1",
         "qs": "^6.14.0",
@@ -80,6 +81,7 @@
         "unplugin-vue-components": "^28.4.1",
         "vite": "^6.2.3",
         "vite-plugin-import-icons": "^1.0.4",
+        "vite-plugin-vue-devtools": "^7.7.2",
         "vite-plugin-zip-pack": "^1.2.4",
         "vue-eslint-parser": "^10.1.1"
     },
