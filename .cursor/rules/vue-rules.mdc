@@ -6,7 +6,7 @@ alwaysApply: false
 # Vue 项目规则
 
 ## 代码生成要求
-- 所有Vue文件必须使用PascalCase命名规范（首字母大写的驼峰式）
+- 所有 Vue 文件必须使用 PascalCase 风格命名
 - script 部分使用 TypeScript 语法，style 部分使用 Less 语法
 - 使用 composition API
 - 使用 Vue 相关 API 无需引入
@@ -15,6 +15,3 @@ alwaysApply: false
 - 使用 ElementPlus 无需引入
 - /src/components 目录中的组件为公共组件，使用前无需引入
 - 样式使用 unocss 编写（tailwindcss 风格）
-
-## 适用范围
-此规则适用于项目中的所有Vue组件

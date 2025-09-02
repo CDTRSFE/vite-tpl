@@ -3,7 +3,7 @@ description:
 globs: 
 alwaysApply: true
 ---
-# 代码风格规则指南
+# 通用代码规则
 
 ## 代码生成要求
 - 生成代码时必须严格遵循项目中已有的stylelint、eslint和prettier配置规则
@@ -15,7 +15,7 @@ alwaysApply: true
 - @.prettierrc.js
 - [stylelint.config.js](mdc:stylelint.config.js)
 
-## 通用代码风格规则
-- 使用TypeScript进行开发
+## 代码风格规则
+- 使用 TypeScript 开发
 - 遵循项目已有的命名约定
 - 遵循项目已有的文件结构和模块组织方式

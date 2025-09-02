@@ -1,0 +1,16 @@
+---
+description: 
+globs: *.test.ts
+alwaysApply: false
+---
+# 测试文件
+
+## 配置文件参考
+在生成代码时，请参考并遵循以下配置文件：
+- @file:src/test/setup.ts
+- @file:vitest.config.ts
+
+## 代码生成要求
+- 测试文件名使用源文件名称 + .test.ts
+- 测试文件必须与被测试的文件在同一目录下
+- vitest 相关 API 无需引入
