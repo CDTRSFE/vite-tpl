@@ -19,7 +19,9 @@
             "vite/client",
             "@types/node",
             "vite-plugin-import-icons/types",
-            "ant-design-vue/typings/global"
+            "ant-design-vue/typings/global",
+            "vitest/globals",
+            "@vue/test-utils"
         ],
         "paths": {
             "@/*": ["src/*"]

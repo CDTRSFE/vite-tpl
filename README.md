@@ -13,6 +13,8 @@
 +   [unplugin-auto-import](https://github.com/antfu/unplugin-auto-import) - API 自动按需引入
 +   [vite-plugin-import-icons](https://github.com/CDTRSFE/vite-plugin-import-icons) - 以组件的方式按需引入图标
 +   ESLint, Stylelint, Prettier
++   [vitest](https://vitest.dev/) - 基于 Vite 的测试框架
++   [@vue/test-utils](https://test-utils.vuejs.org/) - Vue 测试工具库
 
 ## 使用
 
@@ -28,51 +30,57 @@ pnpm dev
 
 ```
 .
-├── .husky
+├── .cursor/                         # Cursor IDE 配置
+│   └── rules/                       # 代码规则配置
+├── .editorconfig                    # 编辑器配置
+├── .gitignore
+├── .husky/                          # Git hooks
+│   ├── _/
 │   ├── commit-msg                   # commit message 格式检测
-│   └── pre-commit                   # git 钩子，commit 之前执行 pnpm lint, pnpm styelint
-├── .vscode
-├── public                           # 静态资源文件夹
+│   └── pre-commit                   # git 钩子，commit 之前执行 pnpm lint, pnpm stylelint
+├── .prettierignore                  # prettier 忽略文件配置
+├── .prettierrc.js                   # prettier 配置
+├── .trae/                           # Trae AI 配置
+│   └── rules/
+├── .vscode/                         # VSCode 配置
+│   └── extensions.json
+├── public/                          # 静态资源文件夹
 │   └── favicon.ico
-├── src
+├── src/
 │   ├── App.vue                      # 根组件
-│   ├── assets
-│   │   ├── fonts                    # 字体文件夹
-│   │   ├── icons                    # 图标文件夹
-│   │   ├── images                   # 图片文件夹
-│   │   └── styles                   # 样式文件夹
-│   │       └── main.less            # 全局样式
-│   ├── components                   # 全局组件文件夹
-│   ├── directives                   # 全局指令文件夹
-│   │   └── Focus.js
+│   ├── assets/
+│   │   ├── fonts/                   # 字体文件夹
+│   │   ├── icons/                   # 图标文件夹
+│   │   ├── images/                  # 图片文件夹
+│   │   └── styles/                  # 样式文件夹
+│   │       ├── main.less            # 全局样式
+│   │       └── mixin.less           # 样式混入
+│   ├── components/                  # 全局组件文件夹
+│   │   ├── ScaleLayout.vue          # 大屏缩放组件
+│   ├── directives/                  # 全局指令文件夹
 │   │   └── index.ts                 # 注册指令
 │   ├── main.ts                      # 入口文件
-│   ├── plugins
-│   │   ├── axios.ts                 # axios
-│   │   └── loading.ts
-│   ├── router
-│   │   └── index.ts                 # 路由
-│   ├── store                        # 状态管理
-│   ├── types
-│   │   ├── auto-imports.d.ts        # 自动引入 API 的类型声明
-│   │   ├── components.d.ts          # 自动注册组件的类型声明
+│   ├── plugins/
+│   │   ├── axios.ts                 # axios 配置
+│   ├── router/                      # 路由配置
+│   ├── store/                       # 状态管理
+│   ├── types/
 │   │   ├── global.d.ts              # 全局类型声明
 │   │   └── shims.d.ts               # 模块类型声明
-│   └── views
-│       └── Index.vue
-├── .eslintrc-auto-import.json       # 自动引入的 API 全局变量配置
-├── .gitignore
-├── .prettierrc                      # prettier 配置
-├── eslint.config.js                 # eslint 配置
-├── index.html
+│   └── views/
+├── test/                            # 测试配置
+│   └── setup.ts                     # 测试环境设置
 ├── README.md
 ├── commitlint.config.js             # commitlint 配置
-├── stylelint.config.js              # stylelint 配置
-├── uno.config.ts                    # unocss 配置
+├── eslint.config.js                 # eslint 配置
+├── index.html
 ├── package.json
 ├── pnpm-lock.yaml
-├── tsconfig.json                    # ts 配置
-└── vite.config.ts                   # vite 配置
+├── stylelint.config.js              # stylelint 配置
+├── tsconfig.json                    # TypeScript 配置
+├── uno.config.ts                    # UnoCSS 配置
+├── vite.config.ts                   # Vite 配置
+└── vitest.config.ts                 # Vitest 测试配置
 ```
 
 ## node 版本
@@ -494,3 +502,35 @@ vscode settings.json：
  代替 `git commit` 生成[符合规范](https://www.conventionalcommits.org/)的 message ，如 `feat(api): xxx`。
 
 > 需要先全局安装 commitizen：`pnpm add -g commitizen` 。
+
+## 🚀 测试
+
+项目使用 [Vitest](https://cn.vitest.dev/) 作为测试框架，配合 [@vue/test-utils](https://test-utils.vuejs.org/) 进行 Vue 组件测试。
+
+### 测试命令
+
+```bash
+# 运行测试（监听模式）
+pnpm test
+
+# 运行测试并生成覆盖率报告
+pnpm test:coverage
+
+# 运行测试 UI 界面
+pnpm test:ui
+```
+
+### 测试配置
+
+- **测试配置文件**: `vitest.config.ts`
+- **测试环境设置**: `test/setup.ts`
+- **测试文件匹配**: `**/*.{test,spec}.{js,ts,jsx,tsx}`
+
+### 测试文件规范
+
+- 测试文件命名：`[源文件名].test.ts`
+- 测试文件位置：推荐单元测试与被测试文件在同一目录下，集成测试（integration test）、端到端测试（e2e test）放在 tests/ 目录下
+
+### VS Code 插件推荐
+
+- [Vitest](https://marketplace.visualstudio.com/items?itemName=ZixuanChen.vitest-explorer) - Vitest 测试资源管理器
