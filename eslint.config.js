@@ -34,10 +34,13 @@ export default [
             'src/types/components.d.ts',
             'index.html',
         ],
+    },
+    {
         languageOptions: {
             globals: {
                 axios: 'readonly',
                 ...autoImport.globals,
+                ...globals.browser,
             },
         },
     },
