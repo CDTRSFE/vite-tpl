@@ -10,3 +10,8 @@ components.d.ts
 .eslintrc-auto-import.json
 __unconfig_vite.config.ts
 coverage
+docs/superpowers/
+.worktrees/
+.superpowers/
+playwright-report
+test-results

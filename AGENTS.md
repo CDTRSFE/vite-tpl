@@ -2,18 +2,38 @@
 
 ## 项目类型
 
-本项目是 PC 端后台管理项目，只需要兼容 1440px 宽度及以上的尺寸；只需保证常见桌面分辨率下布局稳定、可读、可操作。
-
-## 组件库使用
-
-本项目使用 `ant-design-vue` 作为主要 UI 组件库。开发页面和组件时应优先使用组件库已有能力，不要重复实现 Button、Table、Form、Modal、Drawer、Select、DatePicker、Pagination 等基础组件。
+本项目是 PC 端后台管理项目，不需要为小于 1440px 的屏幕做布局兼容。
 
 ## UI 设计规范
 
-在本项目中进行任何 UI 相关开发前，AI 工具必须先阅读：
+在本项目中进行任何 UI 相关开发前，必须先阅读：
 
 ```text
 docs/ui-design-guidelines.md
 ```
 
 后续页面和组件开发应遵守该文档中的设计规范与质量检查要求。
+
+## 需求文档
+
+本项目的需求细化和最终实现方案统一维护在：
+
+```text
+docs/requirements/*.md
+```
+
+详细维护规则见：
+
+```text
+docs/requirements/README.md
+```
+
+`docs/superpowers/` 不作为项目事实来源；如果工具临时生成该目录内容，必须把有效信息迁移或合并到 `docs/requirements/*.md`。
+
+## 测试与验证规则
+
+涉及功能、新页面、接口、表单、Store、组件重构、Bug 修复或其他代码行为变化时，必须先阅读并遵守：
+
+```text
+docs/testing-workflow.md
+```

@@ -11,12 +11,12 @@ export default defineConfig((configEnv) => {
             globals: true,
             environment: 'jsdom',
             include: ['**/*.{test,spec}.{js,ts,jsx,tsx}'],
-            exclude: ['**/node_modules/**', '**/dist/**'],
+            exclude: ['**/node_modules/**', '**/dist/**', 'tests/e2e/**'],
             root: '.',
             testTransformMode: {
                 web: ['.jsx', '.tsx', '.vue'],
             },
-            setupFiles: ['./test/setup.ts'],
+            setupFiles: ['./tests/setup.ts'],
             server: {
                 deps: {
                     inline: ['element-plus', 'axios'],
@@ -30,7 +30,7 @@ export default defineConfig((configEnv) => {
                     '**/*.d.ts',
                     'src/main.ts',
                     'src/plugins/**',
-                    'test/**',
+                    'tests/setup.ts',
                     'src/router/**',
                     'src/store/**',
                     'src/hooks/**',

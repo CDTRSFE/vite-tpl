@@ -15,6 +15,7 @@
 +   ESLint, Stylelint, Prettier
 +   [vitest](https://vitest.dev/) - 基于 Vite 的测试框架
 +   [@vue/test-utils](https://test-utils.vuejs.org/) - Vue 测试工具库
++   [Playwright](https://playwright.dev/) - E2E 测试工具
 
 ## 使用
 
@@ -30,20 +31,20 @@ pnpm dev
 
 ```
 .
-├── .cursor/                         # Cursor IDE 配置
-│   └── rules/                       # 代码规则配置
 ├── .editorconfig                    # 编辑器配置
 ├── .gitignore
 ├── .husky/                          # Git hooks
-│   ├── _/
 │   ├── commit-msg                   # commit message 格式检测
-│   └── pre-commit                   # git 钩子，commit 之前执行 pnpm lint, pnpm stylelint
+│   └── pre-commit                   # commit 前执行 lint
 ├── .prettierignore                  # prettier 忽略文件配置
 ├── .prettierrc.js                   # prettier 配置
-├── .trae/                           # Trae AI 配置
-│   └── rules/
 ├── .vscode/                         # VSCode 配置
 │   └── extensions.json
+├── docs/
+│   ├── requirements/                # 需求文档
+│   │   └── README.md                # 需求文档维护规则
+│   ├── testing-workflow.md          # 测试工作流
+│   └── ui-design-guidelines.md      # UI 设计规范
 ├── public/                          # 静态资源文件夹
 │   └── favicon.ico
 ├── src/
@@ -56,25 +57,38 @@ pnpm dev
 │   │       ├── main.less            # 全局样式
 │   │       └── mixin.less           # 样式混入
 │   ├── components/                  # 全局组件文件夹
-│   │   ├── ScaleLayout.vue          # 大屏缩放组件
+│   │   ├── EchartsCom.vue
+│   │   ├── InfoText.vue
+│   │   ├── ScaleLayout.test.ts
+│   │   └── ScaleLayout.vue
 │   ├── directives/                  # 全局指令文件夹
+│   │   ├── focus.js
 │   │   └── index.ts                 # 注册指令
 │   ├── main.ts                      # 入口文件
 │   ├── plugins/
 │   │   ├── axios.ts                 # axios 配置
+│   │   └── loading.ts               # loading 插件
 │   ├── router/                      # 路由配置
+│   │   └── index.ts
 │   ├── store/                       # 状态管理
+│   │   └── count.ts
 │   ├── types/
 │   │   ├── global.d.ts              # 全局类型声明
 │   │   └── shims.d.ts               # 模块类型声明
 │   └── views/
-├── test/                            # 测试配置
+│       ├── Index.vue
+│       └── VueLogo.vue
+├── tests/                           # 测试配置与跨模块测试
+│   ├── e2e/                         # E2E 测试
+│   ├── integration/                 # 集成测试
 │   └── setup.ts                     # 测试环境设置
+├── AGENTS.md                        # AI 开发约定
 ├── README.md
 ├── commitlint.config.js             # commitlint 配置
 ├── eslint.config.js                 # eslint 配置
 ├── index.html
 ├── package.json
+├── playwright.config.ts             # Playwright E2E 配置
 ├── pnpm-lock.yaml
 ├── stylelint.config.js              # stylelint 配置
 ├── tsconfig.json                    # TypeScript 配置
@@ -86,6 +100,12 @@ pnpm dev
 ## node 版本
 
 推荐使用 Node.js v20.9.0 及以上版本。
+
+## 📚 项目文档
+
+- **需求文档**：`docs/requirements/*.md`，维护规则见 `docs/requirements/README.md`
+- **UI 设计规范**：`docs/ui-design-guidelines.md`
+- **测试工作流**：`docs/testing-workflow.md`
 
 ## 🚀 axios
 
@@ -298,8 +318,7 @@ export const useCountStore = defineStore('counter', () => {
 ```
 src
 └── store
-    ├── user.ts
-    ├── counter.ts
+    ├── count.ts
     └── base.ts
 ```
 
@@ -313,7 +332,7 @@ src
 </template>
 
 <script lang="ts" setup>
-import { useCountStore } from '@/store/counter';
+import { useCountStore } from '@/store/count';
 
 const count = useCountStore();
 watchEffect(() => {
@@ -325,7 +344,7 @@ watchEffect(() => {
 store 是一个用 reactive 包装的对象，可以使用 [storeToRefs](https://pinia.vuejs.org/api/modules/pinia.html#skiphydrate) 实现不丢失响应性的情况下对返回的对象进行解构/展开：
 
 ```jsx
-import { useCountStore } from '@/store/counter';
+import { useCountStore } from '@/store/count';
 import { storeToRefs } from 'pinia';
 
 const store = useCountStore();
@@ -505,7 +524,7 @@ vscode settings.json：
 
 ## 🚀 测试
 
-项目使用 [Vitest](https://cn.vitest.dev/) 作为测试框架，配合 [@vue/test-utils](https://test-utils.vuejs.org/) 进行 Vue 组件测试。
+项目使用 [Vitest](https://cn.vitest.dev/) + [@vue/test-utils](https://test-utils.vuejs.org/) 做单元/组件测试，使用 [Playwright](https://playwright.dev/) 做 E2E 测试。详细规则见 `docs/testing-workflow.md`。
 
 ### 测试命令
 
@@ -518,18 +537,23 @@ pnpm test:coverage
 
 # 运行测试 UI 界面
 pnpm test:ui
+
+# 运行 E2E 测试
+pnpm test:e2e
 ```
 
 ### 测试配置
 
-- **测试配置文件**: `vitest.config.ts`
-- **测试环境设置**: `test/setup.ts`
+- **Vitest 配置**: `vitest.config.ts`
+- **Playwright 配置**: `playwright.config.ts`
+- **测试环境设置**: `tests/setup.ts`
 - **测试文件匹配**: `**/*.{test,spec}.{js,ts,jsx,tsx}`
 
 ### 测试文件规范
 
-- 测试文件命名：`[源文件名].test.ts`
-- 测试文件位置：推荐单元测试与被测试文件在同一目录下，集成测试（integration test）、端到端测试（e2e test）放在 tests/ 目录下
+- 单元测试和组件测试：默认与源文件同目录，命名为 `[源文件名].test.ts`
+- 跨模块集成测试：`tests/integration/`
+- E2E 测试：`tests/e2e/*.spec.ts`
 
 ### VS Code 插件推荐
 
