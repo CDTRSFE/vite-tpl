@@ -1,4 +1,5 @@
 import { mount } from '@vue/test-utils';
+import { nextTick } from 'vue';
 import ScaleLayout from './ScaleLayout.vue';
 
 // 模拟 window 对象

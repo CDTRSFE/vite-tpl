@@ -15,5 +15,5 @@
 </template>
 
 <script setup lang="tsx">
-import VueLogo from './VueLogo.vue';
+import VueLogo from './components/VueLogo.vue';
 </script>

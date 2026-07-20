@@ -11,15 +11,21 @@
         "preview": "vite preview",
         "preview:build": "pnpm build && vite preview",
         "lint": "pnpm lint:eslint && pnpm lint:stylelint",
-        "lint:eslint": "eslint \"src/**/*.{vue,ts,js}\" --fix",
-        "lint:stylelint": "stylelint \"src/**/*.{vue,html,css,less,scss,sass}\" --fix",
+        "lint:eslint": "eslint \"src/**/*.{vue,ts,js}\"",
+        "lint:eslint:fix": "pnpm lint:eslint --fix",
+        "lint:stylelint": "stylelint \"src/**/*.{vue,html,css,less,scss,sass}\"",
+        "lint:stylelint:fix": "pnpm lint:stylelint --fix",
+        "lint:fix": "pnpm lint:eslint:fix && pnpm lint:stylelint:fix",
         "prettier": "prettier --write",
         "test": "vitest",
+        "test:run": "vitest run",
         "test:coverage": "vitest run --coverage",
         "test:ui": "node -v && vitest --ui",
         "test:e2e": "playwright test --pass-with-no-tests",
         "test:e2e:ui": "playwright test --ui",
         "test:e2e:headed": "playwright test --headed",
+        "typecheck": "vue-tsc --noEmit",
+        "check": "pnpm lint && pnpm typecheck && pnpm test:run",
         "preinstall": "npx only-allow pnpm",
         "prepare": "husky"
     },
@@ -91,14 +97,14 @@
         "typescript": "^5.8.2",
         "typescript-eslint": "^8.28.0",
         "unocss": "66.1.0-beta.7",
-        "unplugin-auto-import": "^19.1.2",
         "unplugin-vue-components": "^28.4.1",
         "vite": "^6.2.3",
         "vite-plugin-import-icons": "^1.0.4",
         "vite-plugin-vue-devtools": "^7.7.2",
         "vite-plugin-zip-pack": "^1.2.4",
         "vitest": "^3.2.4",
-        "vue-eslint-parser": "^10.1.1"
+        "vue-eslint-parser": "^10.1.1",
+        "vue-tsc": "^3.3.7"
     },
     "config": {
         "commitizen": {
@@ -109,9 +115,9 @@
     },
     "lint-staged": {
         "*.{js,ts,jsx,tsx,vue}": [
-            "pnpm lint:eslint",
+            "eslint --fix",
             "vitest related --run"
         ],
-        "*.{vue,html,css,less,scss,sass}": "pnpm lint:stylelint"
+        "*.{vue,html,css,less,scss,sass}": "stylelint --fix"
     }
 }

@@ -2,6 +2,8 @@
     <slot></slot>
 </template>
 <script lang="ts" setup>
+import { watch } from 'vue';
+
 // 大屏用于缩放 <body> 的容器组件
 const props = withDefaults(
     defineProps<{

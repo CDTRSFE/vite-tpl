@@ -11,6 +11,8 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue';
+
 const info = ref('Vue3 + Vite + TS');
 const features = ref('AntDesignVue / Axios / UnoCSS / Pinia / VueUse / component auto-import');
 </script>

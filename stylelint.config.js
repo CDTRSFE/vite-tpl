@@ -70,7 +70,7 @@ export default {
         // 'max-line-length': null,
         // https://github.com/vuejs/rfcs/blob/master/active-rfcs/0023-scoped-styles-changes.md
         'selector-pseudo-class-no-unknown': [true, { ignorePseudoClasses: ['deep'] }],
-        'selector-pseudo-element-no-unknown': [true, { ignorePseudoElements: ['v-deep'] }],
+        'selector-pseudo-element-no-unknown': true,
         // https://windicss.org/features/directives.html
         'at-rule-no-unknown': [true, { ignoreAtRules: ['apply', 'variants', 'screen', 'layer'] }],
         'at-rule-no-deprecated': [true, { ignoreAtRules: ['apply', 'variants', 'screen', 'layer'] }],

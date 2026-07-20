@@ -10,7 +10,6 @@
 +   [Pinia](https://pinia.vuejs.org/) - Vue 状态管理库
 +   [VueUse](https://github.com/vueuse/vueuse) - 基于 Composition API 的工具函数集
 +   [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) - 组件自动化加载
-+   [unplugin-auto-import](https://github.com/antfu/unplugin-auto-import) - API 自动按需引入
 +   [vite-plugin-import-icons](https://github.com/CDTRSFE/vite-plugin-import-icons) - 以组件的方式按需引入图标
 +   ESLint, Stylelint, Prettier
 +   [vitest](https://vitest.dev/) - 基于 Vite 的测试框架
@@ -76,8 +75,10 @@ pnpm dev
 │   │   ├── global.d.ts              # 全局类型声明
 │   │   └── shims.d.ts               # 模块类型声明
 │   └── views/
-│       ├── Index.vue
-│       └── VueLogo.vue
+│       ├── home/
+│       │   ├── components/
+│       │   │   └── VueLogo.vue
+│       │   └── Home.vue
 ├── tests/                           # 测试配置与跨模块测试
 │   ├── e2e/                         # E2E 测试
 │   ├── integration/                 # 集成测试
@@ -136,7 +137,7 @@ axios.get('/xxx', { loading: false });
 
 ## 🚀 组件自动化加载
 
-使用 [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) 自动按需引入组件，也无需注册，使用全局组件和 UI 组件库时更加方便。配置后，项目中放在 `'src/components'` 目录下的组件可在全局直接使用。
+使用 [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) 自动按需引入组件，也无需注册，使用全局组件和 UI 组件库时更加方便。当前配置只扫描 `src/components/` 根目录，其中的组件可直接在模板中使用；子目录及 `src/views/**/components/` 中的组件仍需显式引入。
 
 ### ⚙️ 配置
 
@@ -151,6 +152,7 @@ export default defineConfig({
     plugins: [
         Components({
             dirs: ['src/components'],
+            deep: false,
             extensions: ['vue', 'js', 'ts'],
             include: [/\.vue$/, /\.vue\?vue/],
             dts: 'src/types/components.d.ts',
@@ -195,68 +197,6 @@ import FullLoading from '@/components/FullLoading.vue';
 import ElButton from 'ant-design-vue/es/button';
 import 'ant-design-vue/es/button/style/css';
 </script>
-```
-
-## 🚀 **API 自动引入**
-
-通过 [unplugin-auto-import](https://github.com/antfu/unplugin-auto-import) 插件自动按需引入所需 API，`ref`, `watch`, `useRouter` 等 API 无需引入可直接使用。
-
-```html
-<template>
-    <div>{{ name }}</div>
-</template>
-
-<script setup lang="ts">
-const name = ref('name');
-</script>
-```
-
-### ⚙️ 配置
-
-```jsx
-// vite.config.ts
-
-import { defineConfig } from 'vite';
-import AutoImport from 'unplugin-auto-import/vite';
-
-export default defineConfig({
-    plugins: [
-        AutoImport({
-            include: [/\.[tj]sx?$/, /\.vue$/, /\.vue\?vue/],
-            imports: [
-                'vue',
-                'vue-router',
-                '@vueuse/core',
-            ],
-            dts: 'src/types/auto-imports.d.ts',
-            eslintrc: {
-                enabled: true, // Default `false`
-                filepath: './.eslintrc-auto-import.json', // Default `./.eslintrc-auto-import.json`
-                globalsPropValue: true, // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
-            },
-        }),
-    ],
-});
-```
-
-+ `include` 指定需要转换的目标文件，自动引入 API 可以在 js, ts, jsx, tsx, vue 文件中使用。
-+ `imports` 添加了 vue, vue-router, @vueuse/core 三个包，使用时无需导入。
-+ `dts: 'src/types/auto-imports.d.ts'` 用于生成类型声明文件。
-+ `eslintrc` 启用此项配置为了解决 [ESLint 提示 eslint(no-undef) 的问题](https://github.com/antfu/unplugin-auto-import#eslint---eslintno-undef)，会生成一个 ./.eslintrc-auto-import.json 文件，将自动引入的 API 作为全局变量处理，需要在 ESLint 配置文件中作为扩展添加：
-
-```jsx
-// eslint.config.js
-const autoImport = JSON.parse(readFileSync('./.eslintrc-auto-import.json', 'utf8'));
-
-module.exports = [
-    {
-        languageOptions: {
-            globals: {
-                ...autoImport.globals,
-            },
-        },
-    },
-]
 ```
 
 ## 🚀 Pinia
@@ -510,13 +450,11 @@ vscode settings.json：
 
 ## 🚀 ESLint
 
-`.eslintrc-auto-import.json` 引入的是一些全局变量的配置，为了解决 [unplugin-auto-import ESLint 报错的问题](https://github.com/antfu/unplugin-auto-import#eslint---eslintno-undef) 。
-
 项目中使用了 prettier，但无需安装 prettier 插件， 因为 eslint-plugin-prettier 插件可以通过 eslint 提示错误以及自动修复。
 
 ## 🚀 版本控制
 
-- 使用 [lint-staged](https://github.com/okonet/lint-staged) 在提交代码前执行 `pnpm lint` 和 `pnpm stylelint`，防止不规范的代码推送到远程仓库。
+- 使用 [lint-staged](https://github.com/okonet/lint-staged) 在提交代码前对暂存文件执行 ESLint、Stylelint 自动修复和相关测试，防止不规范的代码推送到远程仓库。
 - 使用 [Commitizen](https://github.com/commitizen/cz-cli) + [Commitlint](https://github.com/conventional-changelog/commitlint) 对 commit message 做格式校验，可以使用 `git cz`
  代替 `git commit` 生成[符合规范](https://www.conventionalcommits.org/)的 message ，如 `feat(api): xxx`。
 
@@ -531,6 +469,12 @@ vscode settings.json：
 ```bash
 # 运行测试（监听模式）
 pnpm test
+
+# 运行一次测试
+pnpm test:run
+
+# 运行完整项目检查
+pnpm check
 
 # 运行测试并生成覆盖率报告
 pnpm test:coverage

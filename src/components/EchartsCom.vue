@@ -43,6 +43,7 @@ import {
     GraphicComponent,
 } from 'echarts/components';
 import { SVGRenderer } from 'echarts/renderers';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
 
 // 通过 ComposeOption 来组合出一个只有必须组件和图表的 Option 类型
 export type ECOption = echarts.ComposeOption<

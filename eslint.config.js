@@ -1,4 +1,3 @@
-import { readFileSync, existsSync } from 'fs';
 import js from '@eslint/js';
 import eslintPluginVue from 'eslint-plugin-vue';
 import importPlugin from 'eslint-plugin-import';
@@ -6,16 +5,6 @@ import ts from 'typescript-eslint';
 import unicornPlugin from 'eslint-plugin-unicorn';
 import globals from 'globals';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
-
-// 读取自动导入配置
-let autoImport = { globals: {} };
-try {
-    if (existsSync('./.eslintrc-auto-import.json')) {
-        autoImport = JSON.parse(readFileSync('./.eslintrc-auto-import.json', 'utf8'));
-    }
-} catch (_) {
-    //
-}
 
 export default [
     js.configs.recommended,
@@ -30,7 +19,6 @@ export default [
             '.husky/**',
             '.vscode/**',
             'public/**',
-            'src/types/auto-imports.d.ts',
             'src/types/components.d.ts',
             'index.html',
         ],
@@ -39,7 +27,6 @@ export default [
         languageOptions: {
             globals: {
                 axios: 'readonly',
-                ...autoImport.globals,
                 ...globals.browser,
             },
         },
@@ -59,6 +46,7 @@ export default [
             // 基础规则
             'no-console': 'warn',
             'no-debugger': 'warn',
+            eqeqeq: 'error',
             // 使用驼峰命名约定
             // 'camelcase': ['warn', { properties: 'always' }],
             // 禁止函数圆括号之前有空格
@@ -181,8 +169,8 @@ export default [
                     math: 'any',
                 },
             ],
-            // 组件 name 属性值的格式（驼峰）
-            'vue/component-definition-name-casing': 'error',
+            // 不限制组件 name 属性值的大小写
+            'vue/component-definition-name-casing': 'off',
             // 允许使用 v-html
             'vue/no-v-html': 0,
             // 定义 vue 中 html 缩进

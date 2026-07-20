@@ -9,7 +9,6 @@ import {
     VueUseDirectiveResolver,
     VueUseComponentsResolver,
 } from 'unplugin-vue-components/resolvers';
-import AutoImport from 'unplugin-auto-import/vite';
 import strip from '@rollup/plugin-strip';
 import ImportIcons, { ImportIconsResolver } from 'vite-plugin-import-icons';
 import zipPack from 'vite-plugin-zip-pack';
@@ -65,16 +64,6 @@ export default (env: ConfigEnv) => {
                     VueUseDirectiveResolver(),
                     VueUseComponentsResolver(),
                 ],
-            }),
-            AutoImport({
-                include: [/\.[jt]sx?$/, /\.vue$/, /\.vue\?vue/],
-                imports: ['vue', 'vue-router', '@vueuse/core'],
-                dts: 'src/types/auto-imports.d.ts',
-                eslintrc: {
-                    enabled: true, // Default `false`
-                    filepath: './.eslintrc-auto-import.json', // Default `./.eslintrc-auto-import.json`
-                    globalsPropValue: true, // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
-                },
             }),
             ImportIcons({
                 collections: {
