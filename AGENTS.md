@@ -37,7 +37,7 @@ docs/requirements/*.md
 docs/requirements/README.md
 ```
 
-`docs/superpowers/` 不作为项目事实来源；如果工具临时生成该目录内容，必须把有效信息迁移或合并到 `docs/requirements/*.md`。
+`docs/superpowers/` 不作为项目事实来源。Superpowers 生成的设计、计划、审查和过程记录不得整体迁移或复制到 `docs/requirements/*.md`。开发过程中形成且经用户确认的长期需求、业务规则和最终实现事实，应脱离 Superpowers 文档格式，按照 `docs/requirements/README.md` 的项目规范独立维护。
 
 ## 测试与验证规则
 
