@@ -1,504 +1,90 @@
-# Vite 项目模版
+# Vite 工程脚手架
 
-## 特性
+基于公共基础生成 **PC** 或 **大屏** 工程。根目录维护生成器与模板，生成后的工程保持普通 Vue/Vite 项目结构。
 
-+   Vue3, Vite, TS
-+   [ant-design-vue](https://www.antdv.com/docs/vue/introduce-cn) - 基于 Vue3 的组件库
-+   [axios](https://axios-http.com/) - 基于 promise 的 HTTP 库
-+   [PNPM](https://pnpm.io/zh/) - 快速的，节省磁盘空间的包管理工具
-+   [UnoCSS](https://github.com/unocss/unocss) - 原子化 CSS 引擎
-+   [Pinia](https://pinia.vuejs.org/) - Vue 状态管理库
-+   [VueUse](https://github.com/vueuse/vueuse) - 基于 Composition API 的工具函数集
-+   [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) - 组件自动化加载
-+   [vite-plugin-import-icons](https://github.com/CDTRSFE/vite-plugin-import-icons) - 以组件的方式按需引入图标
-+   ESLint, Stylelint, Prettier
-+   [vitest](https://vitest.dev/) - 基于 Vite 的测试框架
-+   [@vue/test-utils](https://test-utils.vuejs.org/) - Vue 测试工具库
-+   [Playwright](https://playwright.dev/) - E2E 测试工具
+| 类型 | UI 框架 | 布局与入口 | 规范 |
+| --- | --- | --- | --- |
+| pc | Ant Design Vue | 普通桌面布局，不包含 ScaleLayout | PC AGENTS 与浅色 UI 规范 |
+| screen | Naive UI | App.vue 使用 ScaleLayout，默认 1920×1080、fill | 大屏 AGENTS 与独立 UI 规范 |
 
-## 使用
+公共基础包含 Vue 3、Vite、TypeScript、Vue Router、Pinia、Axios、VueUse、UnoCSS、Less、EchartsCom、图标自动解析、ESLint、Stylelint、Prettier、Vitest 和 Playwright。
+
+## 创建工程
+
+使用 Node.js 20.19.0+、pnpm 9.15.9。从已有脚手架目录运行，无需先安装生成器依赖：
 
 ```shell
-npx degit CDTRSFE/vite-tpl my-project
-cd my-project
+# PC
+node scripts/create-project.mjs --template pc --target ../my-pc
+
+# 大屏
+node scripts/create-project.mjs --template screen --target ../my-screen
+```
+
+然后进入选中的生成目录：
+
+```shell
+cd ../my-pc
+# 首次创建时初始化 Git
 git init
-pnpm i
+pnpm install
 pnpm dev
 ```
 
-## 目录
+工程名默认由目标目录名转换为合法包名，可通过 `--name my-project` 指定。路径包含空格时用引号包裹。支持不存在的目录和已有空目录，拒绝覆盖非空目录、文件或符号链接。
 
-```
-.
-├── .editorconfig                    # 编辑器配置
-├── .gitignore
-├── .husky/                          # Git hooks
-│   ├── commit-msg                   # commit message 格式检测
-│   └── pre-commit                   # commit 前执行 lint
-├── .prettierignore                  # prettier 忽略文件配置
-├── .prettierrc.js                   # prettier 配置
-├── .vscode/                         # VSCode 配置
-│   └── extensions.json
-├── docs/
-│   ├── requirements/                # 需求文档
-│   │   └── README.md                # 需求文档维护规则
-│   ├── testing-workflow.md          # 测试工作流
-│   └── ui-design-guidelines.md      # UI 设计规范
-├── public/                          # 静态资源文件夹
-│   └── favicon.ico
-├── src/
-│   ├── App.vue                      # 根组件
-│   ├── assets/
-│   │   ├── fonts/                   # 字体文件夹
-│   │   ├── icons/                   # 图标文件夹
-│   │   ├── images/                  # 图片文件夹
-│   │   └── styles/                  # 样式文件夹
-│   │       ├── main.less            # 全局样式
-│   │       └── mixin.less           # 样式混入
-│   ├── components/                  # 全局组件文件夹
-│   │   ├── EchartsCom.vue
-│   │   ├── InfoText.vue
-│   │   ├── ScaleLayout.test.ts
-│   │   └── ScaleLayout.vue
-│   ├── directives/                  # 全局指令文件夹
-│   │   ├── focus.js
-│   │   └── index.ts                 # 注册指令
-│   ├── main.ts                      # 入口文件
-│   ├── plugins/
-│   │   ├── axios.ts                 # axios 配置
-│   │   └── loading.ts               # loading 插件
-│   ├── router/                      # 路由配置
-│   │   └── index.ts
-│   ├── store/                       # 状态管理
-│   │   └── count.ts
-│   ├── types/
-│   │   ├── global.d.ts              # 全局类型声明
-│   │   └── shims.d.ts               # 模块类型声明
-│   └── views/
-│       ├── home/
-│       │   ├── components/
-│       │   │   └── VueLogo.vue
-│       │   └── Home.vue
-├── tests/                           # 测试配置与跨模块测试
-│   ├── e2e/                         # E2E 测试
-│   ├── integration/                 # 集成测试
-│   └── setup.ts                     # 测试环境设置
-├── AGENTS.md                        # AI 开发约定
-├── README.md
-├── commitlint.config.js             # commitlint 配置
-├── eslint.config.js                 # eslint 配置
-├── index.html
-├── package.json
-├── playwright.config.ts             # Playwright E2E 配置
-├── pnpm-lock.yaml
-├── stylelint.config.js              # stylelint 配置
-├── tsconfig.json                    # TypeScript 配置
-├── uno.config.ts                    # UnoCSS 配置
-├── vite.config.ts                   # Vite 配置
-└── vitest.config.ts                 # Vitest 测试配置
+从远程获取脚手架时，先下载到独立目录，再生成目标工程：
+
+```shell
+template_tmp=$(mktemp -d "${TMPDIR:-/tmp}/vite-tpl.XXXXXX")
+npx degit CDTRSFE/vite-tpl "$template_tmp/source"
+node "$template_tmp/source/scripts/create-project.mjs" --template pc --target "$PWD/my-project"
 ```
 
-## node 版本
+大屏将参数改为 `--template screen`。逐步执行并检查结果；若远程仓库尚未包含生成器，应先发布对应仓库更新。不要将整个脚手架仓库复制到目标目录当作业务工程。下载临时目录在生成后可清理。
 
-推荐使用 Node.js v20.9.0 及以上版本。
+`forge-starter` 沿用原来的类型、名称、路径输入和结果输出；其内部按上述方式选择模板，生成后继续初始化 Git、安装依赖。技能是本机独立文件，不会随仓库提交自动发布。
 
-## 📚 项目文档
+## 目录职责
 
-- **需求文档**：`docs/requirements/*.md`，维护规则见 `docs/requirements/README.md`
-- **UI 设计规范**：`docs/ui-design-guidelines.md`
-- **测试工作流**：`docs/testing-workflow.md`
-
-## 🚀 axios
-
-项目中引入了 axios，拦截器等相关配置在 `src/plugins/axios.ts` 中，axios 实例可作为全局变量直接访问，也可通过 Vue 组件的全局属性访问。
-
-```vue
-<script lang="ts">
-export default defineComponent({
-    created() {
-        this.$axios('/xxx');
-    },
-});
-</script>
+```text
+scripts/
+  create-project.mjs        # 无第三方依赖的生成器
+  create-project.test.mjs   # 真实文件生成与目录保护测试
+  check-templates.mjs       # 分别生成、安装并检查两类工程
+templates/
+  base/                     # 公共源码、工具配置、package.json
+  pc/                       # PC 入口、UI 配置、依赖差异、锁文件与规范
+  screen/                   # 大屏入口、ScaleLayout、Naive UI、锁文件与规范
+docs/
+  requirements/             # 脚手架自身需求与生成机制
 ```
 
-```vue
-<script lang="ts" setup>
-window.axios.get('/xxx');
-axios.get('/xxx');
-</script>
-```
+生成器先复制 base，再覆盖所选类型文件，合并 package.json 的 scripts、dependencies、devDependencies。只复制所选类型的锁文件，不复制另一类型、生成器、脚手架需求文档或 node_modules。
 
-通常情况下，发请求需要显示 loading 动画，所有请求都响应后关闭动画，可在 `src/plugins/loading.ts` 中修改具体的 loading 逻辑。对于不需要 loading 动画的请求可以在配置中添加 `loading` 属性：
+生成后的 `ui.config.ts` 由共享 `vite.config.ts` 引用，负责选择组件解析器；UI API 的全局类型位于 `src/types/ui.d.ts`。
 
-```javascript
-axios.get('/xxx', { loading: false });
-```
+## 维护模板
 
-## 🚀 组件自动化加载
+- 通用修改放在 `templates/base/`；类型差异放到对应模板的同名路径。
+- 修改 UI 前阅读对应模板的 `AGENTS.md` 和 `docs/ui-design-guidelines.md`。
+- `ScaleLayout` 及测试只维护在 screen。默认 `fill` 分别缩放宽高；`contain` 等比居中留边，只在应用根部使用一次。
+- 新增依赖后，在独立生成工程内执行 `pnpm install` 更新锁文件，将该锁文件回写对应模板；公共依赖变化需同时更新两类锁文件。不要在模板片段目录直接安装依赖。
+- `src/types/components.d.ts` 由插件生成，不手动维护或复制进模板。
+- 完整实现规则见 `docs/requirements/project-templates.md`。
 
-使用 [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components) 自动按需引入组件，也无需注册，使用全局组件和 UI 组件库时更加方便。当前配置只扫描 `src/components/` 根目录，其中的组件可直接在模板中使用；子目录及 `src/views/**/components/` 中的组件仍需显式引入。
+## 验证
 
-### ⚙️ 配置
-
-```jsx
-// vite.config.ts
-
-import { defineConfig } from 'vite';
-import Components from 'unplugin-vue-components/vite';
-import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
-
-export default defineConfig({
-    plugins: [
-        Components({
-            dirs: ['src/components'],
-            deep: false,
-            extensions: ['vue', 'js', 'ts'],
-            include: [/\.vue$/, /\.vue\?vue/],
-            dts: 'src/types/components.d.ts',
-            resolvers: [
-                AntDesignVueResolver(),
-            ]
-        }),
-    ],
-})
-```
-
-+ `dirs` 指定查找组件的相对路径，此目录下的组件并非全局注册。
-+ `dts: 'src/types/components.d.ts'` 表示生成全局类型声明文件，用于 volar 类型提示。
-+ `AntDesignVueResolver` 用于解析 ant-design-vue 组件引入。
-
-### 🧐 使用
-
-```
-./src
-├── components
-│   ├── FullLoading.vue
-│   └── TabSelect.vue
-```
-
-```html
-<template>
-    <full-loading></full-loading>
-    <a-button type="primary">btn<a/-button>
-</template>
-```
-
-通过插件处理后，相当于：
-
-```html
-<template>
-    <full-loading></full-loading>
-    <a-button type="primary">btn</a-button>
-</template>
-
-<script setup lang="ts">
-import FullLoading from '@/components/FullLoading.vue';
-import ElButton from 'ant-design-vue/es/button';
-import 'ant-design-vue/es/button/style/css';
-</script>
-```
-
-## 🚀 Pinia
-
-[Pinia](https://pinia.vuejs.org/) 是 Vue 的一个状态管理库，由 Vue 团队成员创建，会成为 Vuex 的继承者，Vue 文档中也[推荐使用 Pinia](https://vuejs.org/guide/scaling-up/state-management.html#pinia)。与 Vuex 相比，Pinia 提供了一个更简单的 API，可以使用 composition-API 风格，在与 Typescript 一起使用时具有可靠的类型推断支持。
-
-和 Vuex ≤ 4 相比，有许多不同：
-
-- 不再有 mutations，不需要再区分同步异步去使用不同的方法；
-- 不再需要通过复杂的包装器来支持 Typscript；
-- 不再有模块的概念，但同时支持在 store 中使用其他 store；
-
-### 定义 store
-
-`store` 使用 [`defineStore()`](https://pinia.vuejs.org/api/modules/pinia.html#definestore)  定义，有三种传参格式：
-
-```jsx
-defineStore(id, options);
-defineStore(options);
-defineStore(id, storeSetup, options?);
-```
-
-其中 `id` 可以通过第一个参数传递，如果不存在，则通过 `options.id` 获取，作为唯一的名称。传参最主要的区别是 `options` 和 `storeSetup`。`options` 是一个对象，包含 `state`, `getters`, `actions`，和 Vuex 类似：
-
-```jsx
-import { defineStore } from 'pinia';
-
-export const useCountStore = defineStore('counter', {
-    state: () => ({
-        counter: 0,
-    }),
-    getters: {
-        doubleCount: (state) => state.counter * 2,
-    },
-    actions: {
-        increment() {
-            this.counter++;
-        },
-    },
-})
-```
-
-第三种传参方式，`storeSetup` 参数是一个函数，和 Vue setup 方法类似，这也是更推荐的写法：
-
-```jsx
-import { defineStore } from 'pinia';
-
-export const useCountStore = defineStore('counter', () => {
-    const counter = ref(0);
-    const doubleCount = computed(() => counter.value * 2);
-    const increment = () => counter.value++;
-
-    return { counter, doubleCount, increment };
-})
-```
-
-可以根据需要定义任意多个 store，并且应该放在不同的文件中，如：
-
-```
-src
-└── store
-    ├── count.ts
-    └── base.ts
-```
-
-### 使用 store
-
-```jsx
-<template>
-    <div>counter: {{ count.counter }}</div>
-    <div>double count: {{ count.doubleCount }}</div>
-    <button @click="count.increment">increment</button>
-</template>
-
-<script lang="ts" setup>
-import { useCountStore } from '@/store/count';
-
-const count = useCountStore();
-watchEffect(() => {
-    console.log(count.counter);
-});
-</script>
-```
-
-store 是一个用 reactive 包装的对象，可以使用 [storeToRefs](https://pinia.vuejs.org/api/modules/pinia.html#skiphydrate) 实现不丢失响应性的情况下对返回的对象进行解构/展开：
-
-```jsx
-import { useCountStore } from '@/store/count';
-import { storeToRefs } from 'pinia';
-
-const store = useCountStore();
-const { counter } = storeToRefs(store); // store.counter
-```
-
-## 🚀 图标
-
-通过 [vite-plugin-import-icons](https://github.com/CDTRSFE/vite-plugin-import-icons) vite 插件实现**图标组件化**，可以将本地图标包装成组件，还有**自动引入**、**按需加载**的功能。
-
-### ⚙️ 配置
-
-```jsx
-// vite.config.ts
-import path from 'path';
-import ImportIcons, { ImportIconsResolver } from 'vite-plugin-import-icons';
-
-export default defineConfig({
-    plugins: [
-        Components({
-            resolvers: [
-                ImportIconsResolver(),
-            ],
-        }),
-        ImportIcons({
-            collections: {
-              	icons: path.resolve(__dirname, './src/assets/icons'),
-            },
-        }),
-    ],
-});
-```
-
-配置说明：
-
-- `ImportIconsResolver` 用于将组件化后的图标组件自动引入，可以直接在 template 中使用。
-- `collections` 用于加载图标，将 './src/assets/icons' 目录下所有 svg 作为一个图标集。
-
-项目中使用了 Typescript，还需要添加类型声明文件 tsconfig.json：
-
-```json
-{
-    "compilerOptions": {
-        "types": [
-            "vite-plugin-import-icons/types",
-        ]
-    }
-}
-```
-
-### 🧐 使用
-
-只需要把 svg 文件放到 ‘./src/assets/icons’ 目录即可，图标集为 ‘icons’，图标名为文件名，推荐使用小写字母，多个单词用短横线链接(kebab-case)：
-
-```
-src
-└─ asstes
-    └─ icons
-        └─ about.svg
-```
-
-```html
-<template>
-    <icons-about></icons-about>
-</template>
-```
-
-图标自动加载和组件自动加载一样，会生成对应的模块声明：
-
-```jsx
-// src/types/components.d.ts
-
-declare module 'vue' {
-    export interface GlobalComponents {
-        IconsHome: typeof import('~icons/icons/home')['default']
-    }
-}
-```
-
-如果不使用组件自动加载功能，则需要先 import :
-
-```html
-<template>
-    <icons-about></icons-about>
-</template>
-<script setup lang="ts">
-import IconsAbout from '~icons/icons/about’;
-</script>
-```
-
-引入图标的路径 `~icons/*` 是一个虚拟路径，由插件处理后，找到真实的 svg 文件，然后包装成 vue 组件返回。
-
-### 批量引入
-
-vite-plugin-import-icons 插件提供了一个 [`import.meta.icons`](https://github.com/CDTRSFE/vite-plugin-import-icons#%E6%89%B9%E9%87%8F%E5%BC%95%E5%85%A5) 函数，用于一次性引入多个图标。
-
-```vue
-<template>
-    <component v-for="(icon, name) in icons" :is="icon" :key="name"></component>
-</template>
-<script>
-const icons = import.meta.icons('icons', 'menu-*')
-</script>
-```
-
-### 和 iconfont 字体图标比较
-
-在 iconfont 上把所有需要的图标加入项目，再以 font-class 的方式使用是一个比较常见的做法，不过有以下问题：
-
-- 首先需要先在平台上添加图标到项目，然后下载图标，最后再替换本地的文件，过程更繁琐；
-- 文件包含所有图标，无法按需加载；
-- 平台账号丢失，只能新建一个图标项目；
-- 多色图标需要换用 svg 或者图片，造成项目中图标使用风格不统一；
-
-## 🚀 UnoCSS
-
-[UnoCSS](https://github.com/unocss/unocss) 是高性能且极具灵活性的即时原子化 CSS 引擎。
-
-### ⚙️ 配置
-
-UnoCSS 的配置文件是 uno.config.ts，需要在项目入口文件中引入相关 CSS：
-
-```tsx
-// main.ts
-
-// 'uno:[layer-name].css'
-import 'uno:components.css';
-// layers that are not 'components' and 'utilities' will fallback to here
-import 'uno.css';
-// your own CSS
-import './assets/styles/main.less';
-// "utilities" layer will have the highest priority
-import 'uno:utilities.css';
-```
-
-### 工具类
-
-工具类的详细介绍可查看文档 [https://windicss.org/utilities/](https://windicss.org/utilities/)，也可以通过搜索快速找到需要的类。
-
-### VS Code 插件
-
-[UnoCSS Intellisense](https://marketplace.visualstudio.com/items?itemName=antfu.unocss) 通过提供给 Visual Studio Code 用户一些特性的方式来提高 UnoCSS 的开发体验，例如：自动补全、语法高亮。
-
-## 🚀 样式
-
-项目中依然采用 Less 作为 CSS 预处理器。
-
-`./src/assets/styles/main.less` 可用于存放公共样式。
-
-## 🚀 Stylelint
-
-建议安装编辑器 [stylelint 插件](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)，并开启保存时自动修复。
-
-vscode settings.json：
-
-```json
-{
-    "editor.codeActionsOnSave": {
-        "source.fixAll.stylelint": true
-    }
-}
-```
-
-## 🚀 ESLint
-
-项目中使用了 prettier，但无需安装 prettier 插件， 因为 eslint-plugin-prettier 插件可以通过 eslint 提示错误以及自动修复。
-
-## 🚀 版本控制
-
-- 使用 [lint-staged](https://github.com/okonet/lint-staged) 在提交代码前对暂存文件执行 ESLint、Stylelint 自动修复和相关测试，防止不规范的代码推送到远程仓库。
-- 使用 [Commitizen](https://github.com/commitizen/cz-cli) + [Commitlint](https://github.com/conventional-changelog/commitlint) 对 commit message 做格式校验，可以使用 `git cz`
- 代替 `git commit` 生成[符合规范](https://www.conventionalcommits.org/)的 message ，如 `feat(api): xxx`。
-
-> 需要先全局安装 commitizen：`pnpm add -g commitizen` 。
-
-## 🚀 测试
-
-项目使用 [Vitest](https://cn.vitest.dev/) + [@vue/test-utils](https://test-utils.vuejs.org/) 做单元/组件测试，使用 [Playwright](https://playwright.dev/) 做 E2E 测试。详细规则见 `docs/testing-workflow.md`。
-
-### 测试命令
-
-```bash
-# 运行测试（监听模式）
+```shell
+# 仅运行生成器测试
 pnpm test
 
-# 运行一次测试
-pnpm test:run
-
-# 运行完整项目检查
+# 测试生成器，并在临时目录生成两类工程，安装各自锁定依赖后执行检查
 pnpm check
-
-# 运行测试并生成覆盖率报告
-pnpm test:coverage
-
-# 运行测试 UI 界面
-pnpm test:ui
-
-# 运行 E2E 测试
-pnpm test:e2e
 ```
 
-### 测试配置
+根 `pnpm check` 使用 `pnpm install --frozen-lockfile --ignore-scripts`，避免检查临时工程时初始化 Git hooks；随后执行生成工程的 lint、Vue 类型检查和单元/组件测试。检查结束清理本次临时目录。
 
-- **Vitest 配置**: `vitest.config.ts`
-- **Playwright 配置**: `playwright.config.ts`
-- **测试环境设置**: `tests/setup.ts`
-- **测试文件匹配**: `**/*.{test,spec}.{js,ts,jsx,tsx}`
+PC 初始模板没有业务测试，允许零用例；大屏包含缩放生命周期和真实 Naive UI 消息、对话框接入测试。各工程保留 `pnpm dev`、`pnpm check`、`pnpm build`、`pnpm test:e2e` 等命令。
 
-### 测试文件规范
-
-- 单元测试和组件测试：默认与源文件同目录，命名为 `[源文件名].test.ts`
-- 跨模块集成测试：`tests/integration/`
-- E2E 测试：`tests/e2e/*.spec.ts`
-
-### VS Code 插件推荐
-
-- [Vitest](https://marketplace.visualstudio.com/items?itemName=ZixuanChen.vitest-explorer) - Vitest 测试资源管理器
+页面、浮层和缩放的浏览器运行时验证先询问用户；确认后检查 Console、Network、布局及交互。

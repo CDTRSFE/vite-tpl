@@ -15,5 +15,3 @@ docs/superpowers/
 .superpowers/
 playwright-report
 test-results
-
-.generated/

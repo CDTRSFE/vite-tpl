@@ -1,18 +1,16 @@
 # AI 开发约定
 
-## 仓库职责与模板边界
+## 项目类型
 
-本仓库维护工程生成器和模板，本身不是可直接启动的业务页面。templates/base 为公共基础，templates/pc 为 PC 差异，templates/screen 为大屏差异。
+本项目为大屏工程，使用 Naive UI。默认设计画布为 1920×1080，在 App.vue 根部仅挂载一次 ScaleLayout，页面按照设计坐标布局。默认 fit="fill" 按宽高分别缩放以铺满窗口；fit="contain" 等比缩放居中，允许留边。项目指定其他画布尺寸或比例时，以实际需求为准，不采用 PC 后台的最小窗口宽度规则。
 
-- 修改模板前，读取对应类型的 AGENTS.md 和 docs/ui-design-guidelines.md；公共修改需要分别检查两类生成结果。
-- PC 使用 Ant Design Vue，大屏使用 Naive UI；ScaleLayout 仅在大屏模板中维护。
-- 生成项目仍采用 src/、docs/ 等普通单工程结构，以下源码路径约定指生成工程内的路径。
+缩放作用于整个 body。弹窗、消息和下拉浮层必须检查缩放后的定位与尺寸，不得嵌套缩放；窗口变化后图表应正常显示，图表使用 EchartsCom。
 
 ## 前端编码约定
 
 - 页面和组件的布局、间距、尺寸、颜色及简单排版优先使用 UnoCSS；伪元素、动画、复杂选择器、`:deep()` 和 UnoCSS 难以表达的样式使用 Less。主题色优先使用 UnoCSS 的 `primary` 或 Less 的 `@primary` 等项目变量。
 - `src/components/` 根目录中的组件由 `unplugin-vue-components` 自动按需解析，在 Vue 模板中使用时无需手动 import；在 script 中直接引用组件对象时仍需显式 import。由于当前配置为 `deep: false`，`src/components/` 的子目录和 `src/views/**/components/` 中的组件必须显式 import。
-- UI 组件及函数式 API 按对应模板的约定使用，公共基础不得引入某个 UI 库的专属依赖。
+- Naive UI 组件在模板中使用 `<n-button>`、`<n-data-table>` 等标签时无需手动 import；`useMessage`、`useDialog`、主题、语言包和类型必须显式 import。组合式消息、对话框 API 必须在对应 Provider 的后代组件中使用；脚本外部使用入口初始化的 `window.$message`、`window.$dialog`。
 - `src/assets/icons/` 中的 SVG 由 `vite-plugin-import-icons` 注册为 `icons-` 前缀组件。例如 `src/assets/icons/search.svg` 在模板中使用 `<icons-search></icons-search>`，无需手动 import。
 - Vue、Vue Router 和 VueUse 的 JavaScript API 必须显式 import；`defineProps`、`defineEmits`、`defineExpose`、`defineModel` 和 `withDefaults` 等 Vue 编译器宏无需 import。
 - `src/types/components.d.ts` 由组件自动解析插件生成，不得手动修改。
